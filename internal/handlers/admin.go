@@ -54,9 +54,10 @@ func (h *AdminHandler) Articles_New(w http.ResponseWriter, r *http.Request) {
 func (h *AdminHandler) Articles_Create(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(32 << 20)
 
+	title := strings.TrimSpace(r.FormValue("title"))
 	article := &models.Article{
-		Title:   strings.TrimSpace(r.FormValue("title")),
-		Slug:    strings.TrimSpace(r.FormValue("slug")),
+		Title:   title,
+		Slug:    Slugify(title),
 		Content: r.FormValue("content"),
 		Excerpt: strings.TrimSpace(r.FormValue("excerpt")),
 	}
@@ -100,7 +101,6 @@ func (h *AdminHandler) Articles_Update(w http.ResponseWriter, r *http.Request) {
 	r.ParseMultipartForm(32 << 20)
 
 	article.Title = strings.TrimSpace(r.FormValue("title"))
-	article.Slug = strings.TrimSpace(r.FormValue("slug"))
 	article.Content = r.FormValue("content")
 	article.Excerpt = strings.TrimSpace(r.FormValue("excerpt"))
 	article.Published = r.FormValue("published") == "on"
@@ -149,9 +149,10 @@ func (h *AdminHandler) Galleries_New(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AdminHandler) Galleries_Create(w http.ResponseWriter, r *http.Request) {
+	galleryTitle := strings.TrimSpace(r.FormValue("title"))
 	gallery := &models.Gallery{
-		Title:       strings.TrimSpace(r.FormValue("title")),
-		Slug:        strings.TrimSpace(r.FormValue("slug")),
+		Title:       galleryTitle,
+		Slug:        Slugify(galleryTitle),
 		Description: r.FormValue("description"),
 	}
 
@@ -192,7 +193,6 @@ func (h *AdminHandler) Galleries_Update(w http.ResponseWriter, r *http.Request) 
 	}
 
 	gallery.Title = strings.TrimSpace(r.FormValue("title"))
-	gallery.Slug = strings.TrimSpace(r.FormValue("slug"))
 	gallery.Description = r.FormValue("description")
 	gallery.ArticleID = nil
 
