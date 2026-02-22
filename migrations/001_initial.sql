@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS comments (
     FOREIGN KEY (article_id) REFERENCES articles(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS settings;
+
 CREATE TABLE IF NOT EXISTS settings (
     setting_key VARCHAR(255) PRIMARY KEY,
     setting_value TEXT NOT NULL
