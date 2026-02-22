@@ -1,11 +1,11 @@
 {{template "admin_base" .}}
 
-{{define "title"}}Users - Charon Admin{{end}}
+{{define "title"}}Uživatelé - Charon Administrace{{end}}
 
 {{define "content"}}
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-    <h1 class="admin-title" style="margin-bottom: 0;">Users</h1>
-    <a href="/admin/users/new" class="btn">New User</a>
+    <h1 class="admin-title" style="margin-bottom: 0;">Uživatelé</h1>
+    <a href="/admin/users/new" class="btn">Nový uživatel</a>
 </div>
 
 <div class="admin-card">
@@ -13,12 +13,12 @@
     <table class="admin-table">
         <thead>
             <tr>
-                <th>Nickname</th>
-                <th>Name</th>
-                <th>Surname</th>
+                <th>Přezdívka</th>
+                <th>Jméno</th>
+                <th>Příjmení</th>
                 <th>Admin</th>
-                <th>Created</th>
-                <th>Actions</th>
+                <th>Vytvořeno</th>
+                <th>Akce</th>
             </tr>
         </thead>
         <tbody>
@@ -28,13 +28,13 @@
                 <td>{{.Name}}</td>
                 <td>{{.Surname}}</td>
                 <td>
-                    {{if .IsAdmin}}<span class="badge badge-yes">Admin</span>{{else}}<span class="badge badge-no">User</span>{{end}}
+                    {{if .IsAdmin}}<span class="badge badge-yes">Admin</span>{{else}}<span class="badge badge-no">Uživatel</span>{{end}}
                 </td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
                 <td>
-                    <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Edit</a>
+                    <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upravit</a>
                     <form method="POST" action="/admin/users/{{.ID}}/delete" style="display:inline;">
-                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this user?">Delete</button>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Smazat tohoto uživatele?">Smazat</button>
                     </form>
                 </td>
             </tr>
@@ -42,7 +42,7 @@
         </tbody>
     </table>
     {{else}}
-    <p style="color: var(--text-muted);">No users yet.</p>
+    <p style="color: var(--text-muted);">Zatím žádní uživatelé.</p>
     {{end}}
 </div>
 {{end}}

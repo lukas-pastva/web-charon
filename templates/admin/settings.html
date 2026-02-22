@@ -1,12 +1,12 @@
 {{template "admin_base" .}}
 
-{{define "title"}}Settings - Charon Admin{{end}}
+{{define "title"}}Nastavení - Charon Administrace{{end}}
 
 {{define "content"}}
-<h1 class="admin-title">Settings</h1>
+<h1 class="admin-title">Nastavení</h1>
 
 {{if .Saved}}
-<div class="alert alert-success">Settings saved successfully.</div>
+<div class="alert alert-success">Nastavení bylo úspěšně uloženo.</div>
 {{end}}
 
 <div class="admin-card">
@@ -14,11 +14,11 @@
         <div class="form-group">
             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                 <input type="checkbox" name="comments_enabled" {{if eq (index .Settings "comments_enabled") "true"}}checked{{end}} style="width: auto;">
-                Enable comments on articles
+                Povolit komentáře u článků
             </label>
         </div>
 
-        <button type="submit" class="btn">Save Settings</button>
+        <button type="submit" class="btn">Uložit nastavení</button>
     </form>
 </div>
 {{end}}

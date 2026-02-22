@@ -1,10 +1,10 @@
 {{template "base" .}}
 
-{{define "title"}}Gallery - Charon MC{{end}}
+{{define "title"}}Galerie - Charon MC{{end}}
 
 {{define "content"}}
 <div class="container">
-    <h1 class="section-title">Gallery</h1>
+    <h1 class="section-title">Galerie</h1>
 
     {{if .Galleries}}
     <div class="gallery-grid">
@@ -21,7 +21,7 @@
         {{end}}
     </div>
     {{else}}
-    <p style="color: var(--text-muted);">No galleries yet. Check back soon.</p>
+    <p style="color: var(--text-muted);">Zatím žádné galerie. Zkuste to později.</p>
     {{end}}
 </div>
 {{end}}

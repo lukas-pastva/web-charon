@@ -1,29 +1,29 @@
 {{template "admin_base" .}}
 
-{{define "title"}}Dashboard - Charon Admin{{end}}
+{{define "title"}}Přehled - Charon Administrace{{end}}
 
 {{define "content"}}
-<h1 class="admin-title">Dashboard</h1>
+<h1 class="admin-title">Přehled</h1>
 
 <div class="stat-grid">
     <div class="stat-card">
         <div class="stat-number">{{.ArticleCount}}</div>
-        <div class="stat-label">Articles</div>
+        <div class="stat-label">Články</div>
     </div>
     <div class="stat-card">
         <div class="stat-number">{{.GalleryCount}}</div>
-        <div class="stat-label">Galleries</div>
+        <div class="stat-label">Galerie</div>
     </div>
     <div class="stat-card">
         <div class="stat-number">{{.PendingCount}}</div>
-        <div class="stat-label">Pending Comments</div>
+        <div class="stat-label">Čekající komentáře</div>
     </div>
 </div>
 
 <div class="admin-card">
-    <h2 style="color: var(--chrome-light); margin-bottom: 1rem;">Quick Actions</h2>
-    <a href="/admin/articles/new" class="btn" style="margin-right: 0.5rem;">New Article</a>
-    <a href="/admin/galleries/new" class="btn" style="margin-right: 0.5rem;">New Gallery</a>
-    <a href="/admin/comments" class="btn">Moderate Comments</a>
+    <h2 style="color: var(--chrome-light); margin-bottom: 1rem;">Rychlé akce</h2>
+    <a href="/admin/articles/new" class="btn" style="margin-right: 0.5rem;">Nový článek</a>
+    <a href="/admin/galleries/new" class="btn" style="margin-right: 0.5rem;">Nová galerie</a>
+    <a href="/admin/comments" class="btn">Moderovat komentáře</a>
 </div>
 {{end}}

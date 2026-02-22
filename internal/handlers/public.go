@@ -53,7 +53,7 @@ func (h *PublicHandler) Articles_List(w http.ResponseWriter, r *http.Request) {
 
 	articles, total, err := h.Articles.GetPublishedPaginated(perPage, offset)
 	if err != nil {
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, "Interní chyba serveru", 500)
 		return
 	}
 
@@ -104,7 +104,7 @@ func (h *PublicHandler) Article_Show(w http.ResponseWriter, r *http.Request) {
 func (h *PublicHandler) Gallery_List(w http.ResponseWriter, r *http.Request) {
 	galleries, err := h.Galleries.GetAll()
 	if err != nil {
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, "Interní chyba serveru", 500)
 		return
 	}
 
@@ -146,7 +146,7 @@ func (h *PublicHandler) Comment_Submit(w http.ResponseWriter, r *http.Request) {
 
 	commentsEnabled, _ := h.Settings.Get("comments_enabled")
 	if commentsEnabled != "true" {
-		http.Error(w, "Comments are disabled", http.StatusForbidden)
+		http.Error(w, "Komentáře jsou zakázány", http.StatusForbidden)
 		return
 	}
 
@@ -166,7 +166,7 @@ func (h *PublicHandler) Comment_Submit(w http.ResponseWriter, r *http.Request) {
 	}
 	if err := h.Comments.Create(comment); err != nil {
 		log.Printf("error creating comment: %v", err)
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, "Interní chyba serveru", 500)
 		return
 	}
 
@@ -177,6 +177,6 @@ func (h *PublicHandler) render(w http.ResponseWriter, name string, data interfac
 	err := h.Templates.ExecuteTemplate(w, name, data)
 	if err != nil {
 		log.Printf("template error (%s): %v", name, err)
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, "Interní chyba serveru", 500)
 	}
 }

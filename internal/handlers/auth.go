@@ -43,12 +43,12 @@ func (h *AuthHandler) LoginPost(w http.ResponseWriter, r *http.Request) {
 
 	user, err := h.Users.GetByNickname(nickname)
 	if err != nil {
-		h.renderLogin(w, "Invalid username or password.")
+		h.renderLogin(w, "Neplatné uživatelské jméno nebo heslo.")
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(password)); err != nil {
-		h.renderLogin(w, "Invalid username or password.")
+		h.renderLogin(w, "Neplatné uživatelské jméno nebo heslo.")
 		return
 	}
 
@@ -101,7 +101,7 @@ func (h *AuthHandler) RequireAdmin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		user := CurrentUser(r)
 		if user == nil || !user.IsAdmin {
-			http.Error(w, "Forbidden", http.StatusForbidden)
+			http.Error(w, "Přístup odepřen", http.StatusForbidden)
 			return
 		}
 		next.ServeHTTP(w, r)
@@ -151,6 +151,6 @@ func (h *AuthHandler) renderLogin(w http.ResponseWriter, errMsg string) {
 	err := t.ExecuteTemplate(w, "login.html", data)
 	if err != nil {
 		log.Printf("login template error: %v", err)
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, "Interní chyba serveru", 500)
 	}
 }

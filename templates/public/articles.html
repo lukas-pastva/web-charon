@@ -1,10 +1,10 @@
 {{template "base" .}}
 
-{{define "title"}}Articles - Charon MC{{end}}
+{{define "title"}}Články - Charon MC{{end}}
 
 {{define "content"}}
 <div class="container">
-    <h1 class="section-title">Articles</h1>
+    <h1 class="section-title">Články</h1>
 
     {{if .Articles}}
     <div class="article-grid">
@@ -16,19 +16,19 @@
             <div class="article-card-body">
                 <h3 class="article-card-title">{{.Title}}</h3>
                 {{if .Excerpt}}<p class="article-card-excerpt">{{.Excerpt}}</p>{{end}}
-                <p class="article-card-meta">{{.CreatedAt.Format "January 2, 2006"}}</p>
+                <p class="article-card-meta">{{.CreatedAt.Format "2. 1. 2006"}}</p>
             </div>
         </a>
         {{end}}
     </div>
 
     <div class="pagination">
-        {{if .HasPrev}}<a href="/articles?page={{.PrevPage}}">&laquo; Previous</a>{{end}}
-        <span>Page {{.Page}} of {{.TotalPages}}</span>
-        {{if .HasNext}}<a href="/articles?page={{.NextPage}}">Next &raquo;</a>{{end}}
+        {{if .HasPrev}}<a href="/articles?page={{.PrevPage}}">&laquo; Předchozí</a>{{end}}
+        <span>Strana {{.Page}} z {{.TotalPages}}</span>
+        {{if .HasNext}}<a href="/articles?page={{.NextPage}}">Další &raquo;</a>{{end}}
     </div>
     {{else}}
-    <p style="color: var(--text-muted);">No articles yet. Check back soon.</p>
+    <p style="color: var(--text-muted);">Zatím žádné články. Zkuste to později.</p>
     {{end}}
 </div>
 {{end}}

@@ -22,9 +22,9 @@ function initLightbox() {
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
-        <button class="lightbox-close" aria-label="Close">&times;</button>
-        <button class="lightbox-nav lightbox-prev" aria-label="Previous">&lsaquo;</button>
-        <button class="lightbox-nav lightbox-next" aria-label="Next">&rsaquo;</button>
+        <button class="lightbox-close" aria-label="Zavřít">&times;</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Předchozí">&lsaquo;</button>
+        <button class="lightbox-nav lightbox-next" aria-label="Další">&rsaquo;</button>
         <img src="" alt="">
         <div class="lightbox-caption"></div>
     `;
