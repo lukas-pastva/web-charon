@@ -41,6 +41,13 @@
             </label>
         </div>
 
+        <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" name="comments_enabled" {{if or .IsNew .Article.CommentsEnabled}}checked{{end}} style="width: auto;">
+                Povolit komentáře
+            </label>
+        </div>
+
         <button type="submit" class="btn">{{if .IsNew}}Vytvořit článek{{else}}Uložit článek{{end}}</button>
         <a href="/admin/articles" style="margin-left: 1rem; color: var(--text-muted);">Zrušit</a>
     </form>

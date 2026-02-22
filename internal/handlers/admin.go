@@ -62,6 +62,7 @@ func (h *AdminHandler) Articles_Create(w http.ResponseWriter, r *http.Request) {
 		Excerpt: strings.TrimSpace(r.FormValue("excerpt")),
 	}
 	article.Published = r.FormValue("published") == "on"
+	article.CommentsEnabled = r.FormValue("comments_enabled") == "on"
 
 	if f, _, err := r.FormFile("cover_image"); err == nil {
 		f.Close()
@@ -104,6 +105,7 @@ func (h *AdminHandler) Articles_Update(w http.ResponseWriter, r *http.Request) {
 	article.Content = r.FormValue("content")
 	article.Excerpt = strings.TrimSpace(r.FormValue("excerpt"))
 	article.Published = r.FormValue("published") == "on"
+	article.CommentsEnabled = r.FormValue("comments_enabled") == "on"
 
 	if f, _, err := r.FormFile("cover_image"); err == nil {
 		f.Close()

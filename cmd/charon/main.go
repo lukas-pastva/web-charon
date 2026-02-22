@@ -154,7 +154,6 @@ func main() {
 		Articles:  articleStore,
 		Galleries: galleryStore,
 		Comments:  commentStore,
-		Settings:  settingsStore,
 		Templates: publicTmpl,
 	}
 

@@ -16,7 +16,6 @@ type PublicHandler struct {
 	Articles  *models.ArticleStore
 	Galleries *models.GalleryStore
 	Comments  *models.CommentStore
-	Settings  *models.SettingsStore
 	Templates map[string]*template.Template
 }
 
@@ -90,13 +89,11 @@ func (h *PublicHandler) Article_Show(w http.ResponseWriter, r *http.Request) {
 		gallery = nil
 	}
 
-	commentsEnabled, _ := h.Settings.Get("comments_enabled")
-
 	data := map[string]interface{}{
 		"Article":         article,
 		"Comments":        comments,
 		"Gallery":         gallery,
-		"CommentsEnabled": commentsEnabled == "true",
+		"CommentsEnabled": article.CommentsEnabled,
 	}
 	h.render(w, "article.html", data)
 }
@@ -144,8 +141,7 @@ func (h *PublicHandler) Comment_Submit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	commentsEnabled, _ := h.Settings.Get("comments_enabled")
-	if commentsEnabled != "true" {
+	if !article.CommentsEnabled {
 		http.Error(w, "Komentáře jsou zakázány", http.StatusForbidden)
 		return
 	}

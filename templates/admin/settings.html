@@ -10,15 +10,6 @@
 {{end}}
 
 <div class="admin-card">
-    <form method="POST" action="/admin/settings">
-        <div class="form-group">
-            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                <input type="checkbox" name="comments_enabled" {{if eq (index .Settings "comments_enabled") "true"}}checked{{end}} style="width: auto;">
-                Povolit komentáře u článků
-            </label>
-        </div>
-
-        <button type="submit" class="btn">Uložit nastavení</button>
-    </form>
+    <p style="color: var(--text-muted);">Komentáře lze povolit nebo zakázat u každého článku zvlášť v editaci článku.</p>
 </div>
 {{end}}

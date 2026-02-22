@@ -22,6 +22,7 @@
     </div>
     {{end}}
 
+    {{if .CommentsEnabled}}
     <div class="comments-section">
         <h2 class="section-title">Komentáře</h2>
 
@@ -37,7 +38,6 @@
         <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatím žádné komentáře. Buďte první!</p>
         {{end}}
 
-        {{if .CommentsEnabled}}
         <h3 style="color: var(--chrome-light); margin: 1.5rem 0 1rem;">Napište komentář</h3>
         <form method="POST" action="/articles/{{.Article.Slug}}/comments">
             <div class="form-group">
@@ -50,7 +50,7 @@
             </div>
             <button type="submit" class="btn">Odeslat komentář</button>
         </form>
-        {{end}}
     </div>
+    {{end}}
 </div>
 {{end}}
