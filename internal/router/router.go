@@ -40,6 +40,10 @@ func New(pub *handlers.PublicHandler, admin *handlers.AdminHandler, auth *handle
 
 			r.Get("/", admin.Dashboard)
 
+			// Profile (any authenticated user)
+			r.Get("/profile", admin.Profile_Show)
+			r.Post("/profile", admin.Profile_Update)
+
 			r.Get("/articles", admin.Articles_List)
 			r.Get("/articles/new", admin.Articles_New)
 			r.Post("/articles", admin.Articles_Create)
@@ -63,6 +67,18 @@ func New(pub *handlers.PublicHandler, admin *handlers.AdminHandler, auth *handle
 
 			r.Get("/settings", admin.Settings_Show)
 			r.Post("/settings", admin.Settings_Update)
+
+			// User management (admin-only)
+			r.Group(func(r chi.Router) {
+				r.Use(auth.RequireAdmin)
+
+				r.Get("/users", admin.Users_List)
+				r.Get("/users/new", admin.Users_New)
+				r.Post("/users", admin.Users_Create)
+				r.Get("/users/{id}/edit", admin.Users_Edit)
+				r.Post("/users/{id}", admin.Users_Update)
+				r.Post("/users/{id}/delete", admin.Users_Delete)
+			})
 		})
 	})
 

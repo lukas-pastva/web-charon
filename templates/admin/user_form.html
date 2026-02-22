@@ -1,0 +1,45 @@
+{{template "admin_base" .}}
+
+{{define "title"}}{{if .IsNew}}New User{{else}}Edit User{{end}} - Charon Admin{{end}}
+
+{{define "content"}}
+<h1 class="admin-title">{{if .IsNew}}New User{{else}}Edit User{{end}}</h1>
+
+{{if .Error}}
+<div class="alert alert-error">{{.Error}}</div>
+{{end}}
+
+<div class="admin-card">
+    <form method="POST" action="{{if .IsNew}}/admin/users{{else}}/admin/users/{{.User.ID}}{{end}}">
+        <div class="form-group">
+            <label for="nickname">Nickname (login name)</label>
+            <input type="text" id="nickname" name="nickname" value="{{.User.Nickname}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="{{.User.Name}}">
+        </div>
+
+        <div class="form-group">
+            <label for="surname">Surname</label>
+            <input type="text" id="surname" name="surname" value="{{.User.Surname}}">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password{{if not .IsNew}} (leave empty to keep current){{end}}</label>
+            <input type="password" id="password" name="password" {{if .IsNew}}required{{end}}>
+        </div>
+
+        <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" name="is_admin" {{if .User.IsAdmin}}checked{{end}} style="width: auto;">
+                Administrator
+            </label>
+        </div>
+
+        <button type="submit" class="btn">{{if .IsNew}}Create User{{else}}Update User{{end}}</button>
+        <a href="/admin/users" style="margin-left: 1rem; color: var(--text-muted);">Cancel</a>
+    </form>
+</div>
+{{end}}

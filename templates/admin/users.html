@@ -1,0 +1,48 @@
+{{template "admin_base" .}}
+
+{{define "title"}}Users - Charon Admin{{end}}
+
+{{define "content"}}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h1 class="admin-title" style="margin-bottom: 0;">Users</h1>
+    <a href="/admin/users/new" class="btn">New User</a>
+</div>
+
+<div class="admin-card">
+    {{if .Users}}
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nickname</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Admin</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Users}}
+            <tr>
+                <td style="color: var(--chrome-light); font-weight: 600;">{{.Nickname}}</td>
+                <td>{{.Name}}</td>
+                <td>{{.Surname}}</td>
+                <td>
+                    {{if .IsAdmin}}<span class="badge badge-yes">Admin</span>{{else}}<span class="badge badge-no">User</span>{{end}}
+                </td>
+                <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
+                <td>
+                    <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Edit</a>
+                    <form method="POST" action="/admin/users/{{.ID}}/delete" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this user?">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p style="color: var(--text-muted);">No users yet.</p>
+    {{end}}
+</div>
+{{end}}

@@ -15,6 +15,7 @@ import (
 	"github.com/lukas-pastva/web-charon/internal/handlers"
 	"github.com/lukas-pastva/web-charon/internal/models"
 	"github.com/lukas-pastva/web-charon/internal/router"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func main() {
@@ -71,6 +72,34 @@ func main() {
 	galleryStore := &models.GalleryStore{DB: db}
 	commentStore := &models.CommentStore{DB: db}
 	settingsStore := &models.SettingsStore{DB: db}
+	userStore := &models.UserStore{DB: db}
+
+	// Seed initial admin user if no users exist
+	count, err := userStore.Count()
+	if err != nil {
+		log.Printf("warning: could not count users: %v", err)
+	} else if count == 0 {
+		adminPass := cfg.AdminPassword
+		if adminPass == "" {
+			adminPass = "admin"
+			log.Println("WARNING: No ADMIN_PASSWORD set, using default password 'admin'")
+		}
+		hash, err := bcrypt.GenerateFromPassword([]byte(adminPass), bcrypt.DefaultCost)
+		if err != nil {
+			log.Fatalf("failed to hash admin password: %v", err)
+		}
+		adminUser := &models.User{
+			Name:         "Admin",
+			Surname:      "",
+			Nickname:     "admin",
+			PasswordHash: string(hash),
+			IsAdmin:      true,
+		}
+		if err := userStore.Create(adminUser); err != nil {
+			log.Fatalf("failed to create initial admin user: %v", err)
+		}
+		log.Println("created initial admin user (nickname: admin)")
+	}
 
 	// Initialize handlers
 	publicHandler := &handlers.PublicHandler{
@@ -86,12 +115,13 @@ func main() {
 		Galleries:   galleryStore,
 		Comments:    commentStore,
 		Settings:    settingsStore,
+		Users:       userStore,
 		Templates:   adminTmpl,
 		StoragePath: cfg.StoragePath,
 	}
 
 	authHandler := &handlers.AuthHandler{
-		AdminPassword: cfg.AdminPassword,
+		Users:         userStore,
 		Templates:     adminTmpl,
 		SessionSecret: sessionSecret,
 	}

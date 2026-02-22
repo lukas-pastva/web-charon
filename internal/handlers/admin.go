@@ -9,6 +9,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/lukas-pastva/web-charon/internal/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type AdminHandler struct {
@@ -16,6 +17,7 @@ type AdminHandler struct {
 	Galleries   *models.GalleryStore
 	Comments    *models.CommentStore
 	Settings    *models.SettingsStore
+	Users       *models.UserStore
 	Templates   *template.Template
 	StoragePath string
 }
@@ -29,6 +31,7 @@ func (h *AdminHandler) Dashboard(w http.ResponseWriter, r *http.Request) {
 		"ArticleCount": len(articles),
 		"GalleryCount": len(galleries),
 		"PendingCount": len(pending),
+		"CurrentUser":  CurrentUser(r),
 	}
 	h.render(w, "dashboard.html", data)
 }
@@ -41,11 +44,11 @@ func (h *AdminHandler) Articles_List(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
-	h.render(w, "articles.html", map[string]interface{}{"Articles": articles})
+	h.render(w, "articles.html", map[string]interface{}{"Articles": articles, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Articles_New(w http.ResponseWriter, r *http.Request) {
-	h.render(w, "article_form.html", map[string]interface{}{"Article": &models.Article{}, "IsNew": true})
+	h.render(w, "article_form.html", map[string]interface{}{"Article": &models.Article{}, "IsNew": true, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Articles_Create(w http.ResponseWriter, r *http.Request) {
@@ -69,7 +72,7 @@ func (h *AdminHandler) Articles_Create(w http.ResponseWriter, r *http.Request) {
 
 	if err := h.Articles.Create(article); err != nil {
 		log.Printf("error creating article: %v", err)
-		h.render(w, "article_form.html", map[string]interface{}{"Article": article, "IsNew": true, "Error": "Failed to create article. Ensure slug is unique."})
+		h.render(w, "article_form.html", map[string]interface{}{"Article": article, "IsNew": true, "Error": "Failed to create article. Ensure slug is unique.", "CurrentUser": CurrentUser(r)})
 		return
 	}
 
@@ -83,7 +86,7 @@ func (h *AdminHandler) Articles_Edit(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	h.render(w, "article_form.html", map[string]interface{}{"Article": article, "IsNew": false})
+	h.render(w, "article_form.html", map[string]interface{}{"Article": article, "IsNew": false, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Articles_Update(w http.ResponseWriter, r *http.Request) {
@@ -112,7 +115,7 @@ func (h *AdminHandler) Articles_Update(w http.ResponseWriter, r *http.Request) {
 
 	if err := h.Articles.Update(article); err != nil {
 		log.Printf("error updating article: %v", err)
-		h.render(w, "article_form.html", map[string]interface{}{"Article": article, "IsNew": false, "Error": "Failed to update article."})
+		h.render(w, "article_form.html", map[string]interface{}{"Article": article, "IsNew": false, "Error": "Failed to update article.", "CurrentUser": CurrentUser(r)})
 		return
 	}
 
@@ -137,12 +140,12 @@ func (h *AdminHandler) Galleries_List(w http.ResponseWriter, r *http.Request) {
 		images, _ := h.Galleries.GetImages(galleries[i].ID)
 		galleries[i].Images = images
 	}
-	h.render(w, "galleries.html", map[string]interface{}{"Galleries": galleries})
+	h.render(w, "galleries.html", map[string]interface{}{"Galleries": galleries, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Galleries_New(w http.ResponseWriter, r *http.Request) {
 	articles, _ := h.Articles.GetAll()
-	h.render(w, "gallery_form.html", map[string]interface{}{"Gallery": &models.Gallery{}, "IsNew": true, "Articles": articles})
+	h.render(w, "gallery_form.html", map[string]interface{}{"Gallery": &models.Gallery{}, "IsNew": true, "Articles": articles, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Galleries_Create(w http.ResponseWriter, r *http.Request) {
@@ -162,7 +165,7 @@ func (h *AdminHandler) Galleries_Create(w http.ResponseWriter, r *http.Request) 
 	if err := h.Galleries.Create(gallery); err != nil {
 		log.Printf("error creating gallery: %v", err)
 		articles, _ := h.Articles.GetAll()
-		h.render(w, "gallery_form.html", map[string]interface{}{"Gallery": gallery, "IsNew": true, "Articles": articles, "Error": "Failed to create gallery. Ensure slug is unique."})
+		h.render(w, "gallery_form.html", map[string]interface{}{"Gallery": gallery, "IsNew": true, "Articles": articles, "Error": "Failed to create gallery. Ensure slug is unique.", "CurrentUser": CurrentUser(r)})
 		return
 	}
 
@@ -177,7 +180,7 @@ func (h *AdminHandler) Galleries_Edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	articles, _ := h.Articles.GetAll()
-	h.render(w, "gallery_form.html", map[string]interface{}{"Gallery": gallery, "IsNew": false, "Articles": articles})
+	h.render(w, "gallery_form.html", map[string]interface{}{"Gallery": gallery, "IsNew": false, "Articles": articles, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Galleries_Update(w http.ResponseWriter, r *http.Request) {
@@ -269,7 +272,7 @@ func (h *AdminHandler) Comments_List(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Internal Server Error", 500)
 		return
 	}
-	h.render(w, "comments.html", map[string]interface{}{"Comments": comments})
+	h.render(w, "comments.html", map[string]interface{}{"Comments": comments, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Comments_Approve(w http.ResponseWriter, r *http.Request) {
@@ -293,7 +296,7 @@ func (h *AdminHandler) Settings_Show(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	saved := r.URL.Query().Get("saved") == "true"
-	h.render(w, "settings.html", map[string]interface{}{"Settings": settings, "Saved": saved})
+	h.render(w, "settings.html", map[string]interface{}{"Settings": settings, "Saved": saved, "CurrentUser": CurrentUser(r)})
 }
 
 func (h *AdminHandler) Settings_Update(w http.ResponseWriter, r *http.Request) {
@@ -304,6 +307,157 @@ func (h *AdminHandler) Settings_Update(w http.ResponseWriter, r *http.Request) {
 	}
 	h.Settings.Set("comments_enabled", commentsEnabled)
 	http.Redirect(w, r, "/admin/settings?saved=true", http.StatusSeeOther)
+}
+
+// --- Users (admin-only) ---
+
+func (h *AdminHandler) Users_List(w http.ResponseWriter, r *http.Request) {
+	users, err := h.Users.GetAll()
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+	h.render(w, "users.html", map[string]interface{}{"Users": users, "CurrentUser": CurrentUser(r)})
+}
+
+func (h *AdminHandler) Users_New(w http.ResponseWriter, r *http.Request) {
+	h.render(w, "user_form.html", map[string]interface{}{"User": &models.User{}, "IsNew": true, "CurrentUser": CurrentUser(r)})
+}
+
+func (h *AdminHandler) Users_Create(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+	nickname := strings.TrimSpace(r.FormValue("nickname"))
+	password := r.FormValue("password")
+	if nickname == "" || password == "" {
+		h.render(w, "user_form.html", map[string]interface{}{
+			"User":        &models.User{Name: r.FormValue("name"), Surname: r.FormValue("surname"), Nickname: nickname, IsAdmin: r.FormValue("is_admin") == "on"},
+			"IsNew":       true,
+			"Error":       "Nickname and password are required.",
+			"CurrentUser": CurrentUser(r),
+		})
+		return
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+
+	user := &models.User{
+		Name:         strings.TrimSpace(r.FormValue("name")),
+		Surname:      strings.TrimSpace(r.FormValue("surname")),
+		Nickname:     nickname,
+		PasswordHash: string(hash),
+		IsAdmin:      r.FormValue("is_admin") == "on",
+	}
+
+	if err := h.Users.Create(user); err != nil {
+		log.Printf("error creating user: %v", err)
+		h.render(w, "user_form.html", map[string]interface{}{"User": user, "IsNew": true, "Error": "Failed to create user. Nickname may already be taken.", "CurrentUser": CurrentUser(r)})
+		return
+	}
+
+	http.Redirect(w, r, "/admin/users", http.StatusSeeOther)
+}
+
+func (h *AdminHandler) Users_Edit(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	user, err := h.Users.GetByID(id)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	h.render(w, "user_form.html", map[string]interface{}{"User": user, "IsNew": false, "CurrentUser": CurrentUser(r)})
+}
+
+func (h *AdminHandler) Users_Update(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	user, err := h.Users.GetByID(id)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	r.ParseForm()
+
+	user.Name = strings.TrimSpace(r.FormValue("name"))
+	user.Surname = strings.TrimSpace(r.FormValue("surname"))
+	user.Nickname = strings.TrimSpace(r.FormValue("nickname"))
+	user.IsAdmin = r.FormValue("is_admin") == "on"
+
+	if password := r.FormValue("password"); password != "" {
+		hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		if err != nil {
+			http.Error(w, "Internal Server Error", 500)
+			return
+		}
+		user.PasswordHash = string(hash)
+	}
+
+	if err := h.Users.Update(user); err != nil {
+		log.Printf("error updating user: %v", err)
+		h.render(w, "user_form.html", map[string]interface{}{"User": user, "IsNew": false, "Error": "Failed to update user.", "CurrentUser": CurrentUser(r)})
+		return
+	}
+
+	http.Redirect(w, r, "/admin/users", http.StatusSeeOther)
+}
+
+func (h *AdminHandler) Users_Delete(w http.ResponseWriter, r *http.Request) {
+	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
+	currentUser := CurrentUser(r)
+	if currentUser != nil && currentUser.ID == id {
+		http.Error(w, "Cannot delete yourself", http.StatusBadRequest)
+		return
+	}
+	h.Users.Delete(id)
+	http.Redirect(w, r, "/admin/users", http.StatusSeeOther)
+}
+
+// --- Profile (self-edit) ---
+
+func (h *AdminHandler) Profile_Show(w http.ResponseWriter, r *http.Request) {
+	user := CurrentUser(r)
+	saved := r.URL.Query().Get("saved") == "true"
+	h.render(w, "profile.html", map[string]interface{}{"User": user, "Saved": saved, "CurrentUser": user})
+}
+
+func (h *AdminHandler) Profile_Update(w http.ResponseWriter, r *http.Request) {
+	currentUser := CurrentUser(r)
+	if currentUser == nil {
+		http.Redirect(w, r, "/admin/login", http.StatusSeeOther)
+		return
+	}
+
+	r.ParseForm()
+
+	user, err := h.Users.GetByID(currentUser.ID)
+	if err != nil {
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+
+	user.Name = strings.TrimSpace(r.FormValue("name"))
+	user.Surname = strings.TrimSpace(r.FormValue("surname"))
+
+	if password := r.FormValue("password"); password != "" {
+		hash, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+		if err != nil {
+			http.Error(w, "Internal Server Error", 500)
+			return
+		}
+		user.PasswordHash = string(hash)
+	}
+
+	if err := h.Users.Update(user); err != nil {
+		log.Printf("error updating profile: %v", err)
+		h.render(w, "profile.html", map[string]interface{}{"User": user, "Error": "Failed to update profile.", "CurrentUser": user})
+		return
+	}
+
+	http.Redirect(w, r, "/admin/profile?saved=true", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) render(w http.ResponseWriter, name string, data interface{}) {
