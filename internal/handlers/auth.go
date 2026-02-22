@@ -23,7 +23,7 @@ const userContextKey contextKey = "user"
 
 type AuthHandler struct {
 	Users         *models.UserStore
-	Templates     *template.Template
+	Templates     map[string]*template.Template
 	SessionSecret []byte
 }
 
@@ -147,7 +147,8 @@ func (h *AuthHandler) renderLogin(w http.ResponseWriter, errMsg string) {
 	data := map[string]interface{}{
 		"Error": errMsg,
 	}
-	err := h.Templates.ExecuteTemplate(w, "login.html", data)
+	t := h.Templates["login.html"]
+	err := t.ExecuteTemplate(w, "login.html", data)
 	if err != nil {
 		log.Printf("login template error: %v", err)
 		http.Error(w, "Internal Server Error", 500)

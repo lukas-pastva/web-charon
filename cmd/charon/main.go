@@ -62,10 +62,38 @@ func main() {
 		log.Fatalf("failed to parse public templates: %v", err)
 	}
 
-	adminTmpl, err := template.New("").Funcs(funcMap).ParseFS(charon.AdminTemplatesFS, "templates/admin/*.html")
+	// Parse admin templates — each page gets its own template set cloned from
+	// the base so that block definitions (title, content) don't collide.
+	baseTmpl, err := template.New("").Funcs(funcMap).ParseFS(charon.AdminTemplatesFS, "templates/admin/base.html")
 	if err != nil {
-		log.Fatalf("failed to parse admin templates: %v", err)
+		log.Fatalf("failed to parse admin base template: %v", err)
 	}
+
+	adminPages := []string{
+		"dashboard.html", "articles.html", "article_form.html",
+		"galleries.html", "gallery_form.html", "comments.html",
+		"settings.html", "users.html", "user_form.html", "profile.html",
+	}
+
+	adminTmpl := make(map[string]*template.Template)
+	for _, page := range adminPages {
+		clone, err := baseTmpl.Clone()
+		if err != nil {
+			log.Fatalf("failed to clone base template: %v", err)
+		}
+		t, err := clone.ParseFS(charon.AdminTemplatesFS, "templates/admin/"+page)
+		if err != nil {
+			log.Fatalf("failed to parse admin template %s: %v", page, err)
+		}
+		adminTmpl[page] = t
+	}
+
+	// Login template is self-contained (no base layout)
+	loginTmpl, err := template.New("").Funcs(funcMap).ParseFS(charon.AdminTemplatesFS, "templates/admin/login.html")
+	if err != nil {
+		log.Fatalf("failed to parse login template: %v", err)
+	}
+	adminTmpl["login.html"] = loginTmpl
 
 	// Initialize stores
 	articleStore := &models.ArticleStore{DB: db}

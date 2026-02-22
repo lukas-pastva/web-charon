@@ -18,7 +18,7 @@ type AdminHandler struct {
 	Comments    *models.CommentStore
 	Settings    *models.SettingsStore
 	Users       *models.UserStore
-	Templates   *template.Template
+	Templates   map[string]*template.Template
 	StoragePath string
 }
 
@@ -461,7 +461,13 @@ func (h *AdminHandler) Profile_Update(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *AdminHandler) render(w http.ResponseWriter, name string, data interface{}) {
-	err := h.Templates.ExecuteTemplate(w, name, data)
+	t, ok := h.Templates[name]
+	if !ok {
+		log.Printf("admin template not found: %s", name)
+		http.Error(w, "Internal Server Error", 500)
+		return
+	}
+	err := t.ExecuteTemplate(w, name, data)
 	if err != nil {
 		log.Printf("admin template error (%s): %v", name, err)
 		http.Error(w, "Internal Server Error", 500)
