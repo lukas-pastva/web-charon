@@ -10,7 +10,7 @@
 {{end}}
 
 <div class="admin-card">
-    <form method="POST" action="{{if .IsNew}}/articles{{else}}/articles/{{.Article.ID}}{{end}}" enctype="multipart/form-data">
+    <form method="POST" action="{{if .IsNew}}/admin/articles{{else}}/admin/articles/{{.Article.ID}}{{end}}" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" value="{{.Article.Title}}" required>
@@ -47,7 +47,7 @@
         </div>
 
         <button type="submit" class="btn">{{if .IsNew}}Create Article{{else}}Update Article{{end}}</button>
-        <a href="/articles" style="margin-left: 1rem; color: var(--text-muted);">Cancel</a>
+        <a href="/admin/articles" style="margin-left: 1rem; color: var(--text-muted);">Cancel</a>
     </form>
 </div>
 {{end}}

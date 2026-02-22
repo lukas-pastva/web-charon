@@ -10,7 +10,7 @@
 {{end}}
 
 <div class="admin-card">
-    <form method="POST" action="/settings">
+    <form method="POST" action="/admin/settings">
         <div class="form-group">
             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                 <input type="checkbox" name="comments_enabled" {{if eq (index .Settings "comments_enabled") "true"}}checked{{end}} style="width: auto;">

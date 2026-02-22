@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/rand"
 	"html/template"
 	"io/fs"
 	"log"
@@ -34,6 +35,12 @@ func main() {
 	// Ensure storage directory exists
 	if err := os.MkdirAll(cfg.StoragePath, 0755); err != nil {
 		log.Fatalf("failed to create storage directory: %v", err)
+	}
+
+	// Generate session secret
+	sessionSecret := make([]byte, 32)
+	if _, err := rand.Read(sessionSecret); err != nil {
+		log.Fatalf("failed to generate session secret: %v", err)
 	}
 
 	// Parse templates
@@ -83,6 +90,12 @@ func main() {
 		StoragePath: cfg.StoragePath,
 	}
 
+	authHandler := &handlers.AuthHandler{
+		AdminPassword: cfg.AdminPassword,
+		Templates:     adminTmpl,
+		SessionSecret: sessionSecret,
+	}
+
 	// Static file system
 	staticSub, err := fs.Sub(charon.StaticFS, "static")
 	if err != nil {
@@ -90,11 +103,11 @@ func main() {
 	}
 
 	// Create router
-	handler := router.New(publicHandler, adminHandler, cfg.AdminDomain, cfg.StoragePath, http.FS(staticSub))
+	handler := router.New(publicHandler, adminHandler, authHandler, cfg.StoragePath, http.FS(staticSub))
 
 	// Start server
 	addr := ":" + cfg.Port
-	log.Printf("Charon starting on %s (public: %s, admin: %s)", addr, cfg.PublicDomain, cfg.AdminDomain)
+	log.Printf("Charon starting on %s (public: %s)", addr, cfg.PublicDomain)
 	if err := http.ListenAndServe(addr, handler); err != nil {
 		log.Fatalf("server error: %v", err)
 	}

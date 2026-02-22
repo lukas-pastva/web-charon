@@ -73,7 +73,7 @@ func (h *AdminHandler) Articles_Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/articles", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/articles", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Articles_Edit(w http.ResponseWriter, r *http.Request) {
@@ -116,13 +116,13 @@ func (h *AdminHandler) Articles_Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, "/articles", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/articles", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Articles_Delete(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	h.Articles.Delete(id)
-	http.Redirect(w, r, "/articles", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/articles", http.StatusSeeOther)
 }
 
 // --- Galleries ---
@@ -166,7 +166,7 @@ func (h *AdminHandler) Galleries_Create(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	http.Redirect(w, r, "/galleries", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/galleries", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Galleries_Edit(w http.ResponseWriter, r *http.Request) {
@@ -204,13 +204,13 @@ func (h *AdminHandler) Galleries_Update(w http.ResponseWriter, r *http.Request) 
 		log.Printf("error updating gallery: %v", err)
 	}
 
-	http.Redirect(w, r, "/galleries", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/galleries", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Galleries_Delete(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	h.Galleries.Delete(id)
-	http.Redirect(w, r, "/galleries", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/galleries", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Galleries_UploadImages(w http.ResponseWriter, r *http.Request) {
@@ -246,7 +246,7 @@ func (h *AdminHandler) Galleries_UploadImages(w http.ResponseWriter, r *http.Req
 		h.Galleries.AddImage(img)
 	}
 
-	http.Redirect(w, r, "/galleries/"+strconv.FormatInt(id, 10)+"/edit", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/galleries/"+strconv.FormatInt(id, 10)+"/edit", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Images_Delete(w http.ResponseWriter, r *http.Request) {
@@ -258,7 +258,7 @@ func (h *AdminHandler) Images_Delete(w http.ResponseWriter, r *http.Request) {
 	}
 	galleryID := img.GalleryID
 	h.Galleries.DeleteImage(id)
-	http.Redirect(w, r, "/galleries/"+strconv.FormatInt(galleryID, 10)+"/edit", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/galleries/"+strconv.FormatInt(galleryID, 10)+"/edit", http.StatusSeeOther)
 }
 
 // --- Comments ---
@@ -275,13 +275,13 @@ func (h *AdminHandler) Comments_List(w http.ResponseWriter, r *http.Request) {
 func (h *AdminHandler) Comments_Approve(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	h.Comments.Approve(id)
-	http.Redirect(w, r, "/comments", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/comments", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) Comments_Delete(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.ParseInt(chi.URLParam(r, "id"), 10, 64)
 	h.Comments.Delete(id)
-	http.Redirect(w, r, "/comments", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/comments", http.StatusSeeOther)
 }
 
 // --- Settings ---
@@ -303,7 +303,7 @@ func (h *AdminHandler) Settings_Update(w http.ResponseWriter, r *http.Request) {
 		commentsEnabled = "true"
 	}
 	h.Settings.Set("comments_enabled", commentsEnabled)
-	http.Redirect(w, r, "/settings?saved=true", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin/settings?saved=true", http.StatusSeeOther)
 }
 
 func (h *AdminHandler) render(w http.ResponseWriter, name string, data interface{}) {

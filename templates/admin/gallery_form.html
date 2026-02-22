@@ -10,7 +10,7 @@
 {{end}}
 
 <div class="admin-card">
-    <form method="POST" action="{{if .IsNew}}/galleries{{else}}/galleries/{{.Gallery.ID}}{{end}}">
+    <form method="POST" action="{{if .IsNew}}/admin/galleries{{else}}/admin/galleries/{{.Gallery.ID}}{{end}}">
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" id="title" name="title" value="{{.Gallery.Title}}" required>
@@ -37,7 +37,7 @@
         </div>
 
         <button type="submit" class="btn">{{if .IsNew}}Create Gallery{{else}}Update Gallery{{end}}</button>
-        <a href="/galleries" style="margin-left: 1rem; color: var(--text-muted);">Cancel</a>
+        <a href="/admin/galleries" style="margin-left: 1rem; color: var(--text-muted);">Cancel</a>
     </form>
 </div>
 
@@ -50,7 +50,7 @@
         {{range .Gallery.Images}}
         <div class="image-grid-item">
             <img src="/uploads/{{.Filename}}" alt="{{.Caption}}">
-            <form method="POST" action="/images/{{.ID}}/delete" class="delete-btn">
+            <form method="POST" action="/admin/images/{{.ID}}/delete" class="delete-btn">
                 <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this image?">&times;</button>
             </form>
         </div>
@@ -61,7 +61,7 @@
     {{end}}
 
     <h3 style="color: var(--chrome-light); margin: 1.5rem 0 0.5rem;">Upload Images</h3>
-    <form method="POST" action="/galleries/{{.Gallery.ID}}/images" enctype="multipart/form-data">
+    <form method="POST" action="/admin/galleries/{{.Gallery.ID}}/images" enctype="multipart/form-data">
         <div class="form-group">
             <input type="file" name="images" multiple accept="image/*">
         </div>

@@ -28,11 +28,11 @@
                 <td style="color: var(--text-muted); white-space: nowrap;">{{.CreatedAt.Format "2006-01-02"}}</td>
                 <td style="white-space: nowrap;">
                     {{if not .Approved}}
-                    <form method="POST" action="/comments/{{.ID}}/approve" style="display:inline;">
+                    <form method="POST" action="/admin/comments/{{.ID}}/approve" style="display:inline;">
                         <button type="submit" class="btn btn-sm btn-success">Approve</button>
                     </form>
                     {{end}}
-                    <form method="POST" action="/comments/{{.ID}}/delete" style="display:inline;">
+                    <form method="POST" action="/admin/comments/{{.ID}}/delete" style="display:inline;">
                         <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this comment?">Delete</button>
                     </form>
                 </td>

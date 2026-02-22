@@ -5,7 +5,7 @@
 {{define "content"}}
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
     <h1 class="admin-title" style="margin-bottom: 0;">Galleries</h1>
-    <a href="/galleries/new" class="btn">New Gallery</a>
+    <a href="/admin/galleries/new" class="btn">New Gallery</a>
 </div>
 
 <div class="admin-card">
@@ -28,8 +28,8 @@
                 <td>{{len .Images}}</td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
                 <td>
-                    <a href="/galleries/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Edit</a>
-                    <form method="POST" action="/galleries/{{.ID}}/delete" style="display:inline;">
+                    <a href="/admin/galleries/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Edit</a>
+                    <form method="POST" action="/admin/galleries/{{.ID}}/delete" style="display:inline;">
                         <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this gallery and all its images?">Delete</button>
                     </form>
                 </td>

@@ -62,13 +62,18 @@
 <body>
     <nav class="admin-nav">
         <div class="admin-nav-inner">
-            <a href="/" class="admin-brand">Charon Admin</a>
+            <a href="/admin" class="admin-brand">Charon Admin</a>
             <ul class="admin-links">
-                <li><a href="/">Dashboard</a></li>
-                <li><a href="/articles">Articles</a></li>
-                <li><a href="/galleries">Galleries</a></li>
-                <li><a href="/comments">Comments</a></li>
-                <li><a href="/settings">Settings</a></li>
+                <li><a href="/admin">Dashboard</a></li>
+                <li><a href="/admin/articles">Articles</a></li>
+                <li><a href="/admin/galleries">Galleries</a></li>
+                <li><a href="/admin/comments">Comments</a></li>
+                <li><a href="/admin/settings">Settings</a></li>
+                <li>
+                    <form method="POST" action="/admin/logout" style="display:inline;">
+                        <button type="submit" style="background:none;border:none;color:var(--chrome);font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:0;">Logout</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>

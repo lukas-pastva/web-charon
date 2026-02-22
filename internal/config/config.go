@@ -11,9 +11,9 @@ type Config struct {
 	DBPassword   string
 	DBName       string
 	StoragePath  string
-	PublicDomain string
-	AdminDomain  string
-	Port         string
+	PublicDomain  string
+	AdminPassword string
+	Port          string
 }
 
 func Load() *Config {
@@ -24,9 +24,9 @@ func Load() *Config {
 		DBPassword:   getEnv("DB_PASSWORD", ""),
 		DBName:       getEnv("DB_NAME", "charon"),
 		StoragePath:  getEnv("STORAGE_PATH", "/data/uploads"),
-		PublicDomain: getEnv("PUBLIC_DOMAIN", "localhost"),
-		AdminDomain:  getEnv("ADMIN_DOMAIN", "admin.localhost"),
-		Port:         getEnv("PORT", "8080"),
+		PublicDomain:  getEnv("PUBLIC_DOMAIN", "localhost"),
+		AdminPassword: getEnv("ADMIN_PASSWORD", ""),
+		Port:          getEnv("PORT", "8080"),
 	}
 }
 
