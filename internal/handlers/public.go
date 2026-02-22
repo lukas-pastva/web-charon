@@ -17,7 +17,7 @@ type PublicHandler struct {
 	Galleries *models.GalleryStore
 	Comments  *models.CommentStore
 	Settings  *models.SettingsStore
-	Templates *template.Template
+	Templates map[string]*template.Template
 }
 
 func (h *PublicHandler) Home(w http.ResponseWriter, r *http.Request) {
@@ -174,7 +174,13 @@ func (h *PublicHandler) Comment_Submit(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *PublicHandler) render(w http.ResponseWriter, name string, data interface{}) {
-	err := h.Templates.ExecuteTemplate(w, name, data)
+	t, ok := h.Templates[name]
+	if !ok {
+		log.Printf("public template not found: %s", name)
+		http.Error(w, "Interní chyba serveru", 500)
+		return
+	}
+	err := t.ExecuteTemplate(w, name, data)
 	if err != nil {
 		log.Printf("template error (%s): %v", name, err)
 		http.Error(w, "Interní chyba serveru", 500)

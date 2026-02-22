@@ -57,9 +57,29 @@ func main() {
 		},
 	}
 
-	publicTmpl, err := template.New("").Funcs(funcMap).ParseFS(charon.PublicTemplatesFS, "templates/public/*.html")
+	// Parse public templates — each page gets its own template set cloned from
+	// the base so that block definitions (title, content) don't collide.
+	publicBaseTmpl, err := template.New("").Funcs(funcMap).ParseFS(charon.PublicTemplatesFS, "templates/public/base.html")
 	if err != nil {
-		log.Fatalf("failed to parse public templates: %v", err)
+		log.Fatalf("failed to parse public base template: %v", err)
+	}
+
+	publicPages := []string{
+		"home.html", "article.html", "articles.html",
+		"gallery.html", "gallery_detail.html",
+	}
+
+	publicTmpl := make(map[string]*template.Template)
+	for _, page := range publicPages {
+		clone, err := publicBaseTmpl.Clone()
+		if err != nil {
+			log.Fatalf("failed to clone public base template: %v", err)
+		}
+		t, err := clone.ParseFS(charon.PublicTemplatesFS, "templates/public/"+page)
+		if err != nil {
+			log.Fatalf("failed to parse public template %s: %v", page, err)
+		}
+		publicTmpl[page] = t
 	}
 
 	// Parse admin templates — each page gets its own template set cloned from
