@@ -1,0 +1,44 @@
+{{template "admin_base" .}}
+
+{{define "title"}}Galleries - Charon Admin{{end}}
+
+{{define "content"}}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+    <h1 class="admin-title" style="margin-bottom: 0;">Galleries</h1>
+    <a href="/galleries/new" class="btn">New Gallery</a>
+</div>
+
+<div class="admin-card">
+    {{if .Galleries}}
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Images</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Galleries}}
+            <tr>
+                <td style="color: var(--chrome-light); font-weight: 600;">{{.Title}}</td>
+                <td><code style="color: var(--text-muted);">{{.Slug}}</code></td>
+                <td>{{len .Images}}</td>
+                <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
+                <td>
+                    <a href="/galleries/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Edit</a>
+                    <form method="POST" action="/galleries/{{.ID}}/delete" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this gallery and all its images?">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p style="color: var(--text-muted);">No galleries yet.</p>
+    {{end}}
+</div>
+{{end}}

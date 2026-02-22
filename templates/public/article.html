@@ -1,0 +1,56 @@
+{{template "base" .}}
+
+{{define "title"}}{{.Article.Title}} - Charon MC{{end}}
+
+{{define "content"}}
+<div class="container">
+    <div class="article-content">
+        {{if .Article.CoverImage}}
+        <img src="/uploads/{{.Article.CoverImage}}" alt="{{.Article.Title}}" class="article-cover">
+        {{end}}
+        <h1>{{.Article.Title}}</h1>
+        <div class="meta">{{.Article.CreatedAt.Format "January 2, 2006"}}</div>
+        <div class="body">{{nl2br .Article.Content}}</div>
+    </div>
+
+    {{if .Gallery}}
+    <h2 class="section-title">Gallery</h2>
+    <div class="gallery-images">
+        {{range .Gallery.Images}}
+        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">
+        {{end}}
+    </div>
+    {{end}}
+
+    <div class="comments-section">
+        <h2 class="section-title">Comments</h2>
+
+        {{if .Comments}}
+        {{range .Comments}}
+        <div class="comment">
+            <div class="comment-author">{{.AuthorName}}</div>
+            <div class="comment-date">{{.CreatedAt.Format "January 2, 2006 at 3:04 PM"}}</div>
+            <div class="comment-body">{{nl2br .Content}}</div>
+        </div>
+        {{end}}
+        {{else}}
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">No comments yet. Be the first!</p>
+        {{end}}
+
+        {{if .CommentsEnabled}}
+        <h3 style="color: var(--chrome-light); margin: 1.5rem 0 1rem;">Leave a Comment</h3>
+        <form method="POST" action="/articles/{{.Article.Slug}}/comments">
+            <div class="form-group">
+                <label for="author_name">Name</label>
+                <input type="text" id="author_name" name="author_name" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Comment</label>
+                <textarea id="content" name="content" required></textarea>
+            </div>
+            <button type="submit" class="btn">Submit Comment</button>
+        </form>
+        {{end}}
+    </div>
+</div>
+{{end}}

@@ -1,0 +1,27 @@
+{{template "base" .}}
+
+{{define "title"}}Gallery - Charon MC{{end}}
+
+{{define "content"}}
+<div class="container">
+    <h1 class="section-title">Gallery</h1>
+
+    {{if .Galleries}}
+    <div class="gallery-grid">
+        {{range .Galleries}}
+        <a href="/gallery/{{.Slug}}" class="gallery-card">
+            {{if .Images}}
+            <img src="/uploads/{{(index .Images 0).Filename}}" alt="{{.Title}}" class="gallery-card-img">
+            {{end}}
+            <div class="gallery-card-body">
+                <h3 class="gallery-card-title">{{.Title}}</h3>
+                {{if .Description}}<p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">{{.Description}}</p>{{end}}
+            </div>
+        </a>
+        {{end}}
+    </div>
+    {{else}}
+    <p style="color: var(--text-muted);">No galleries yet. Check back soon.</p>
+    {{end}}
+</div>
+{{end}}

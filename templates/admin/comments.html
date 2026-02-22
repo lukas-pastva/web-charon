@@ -1,0 +1,47 @@
+{{template "admin_base" .}}
+
+{{define "title"}}Comments - Charon Admin{{end}}
+
+{{define "content"}}
+<h1 class="admin-title">Comment Moderation</h1>
+
+<div class="admin-card">
+    {{if .Comments}}
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Comment</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{range .Comments}}
+            <tr>
+                <td style="color: var(--chrome-light); font-weight: 600;">{{.AuthorName}}</td>
+                <td style="max-width: 400px;">{{.Content}}</td>
+                <td>
+                    {{if .Approved}}<span class="badge badge-yes">Approved</span>{{else}}<span class="badge badge-no">Pending</span>{{end}}
+                </td>
+                <td style="color: var(--text-muted); white-space: nowrap;">{{.CreatedAt.Format "2006-01-02"}}</td>
+                <td style="white-space: nowrap;">
+                    {{if not .Approved}}
+                    <form method="POST" action="/comments/{{.ID}}/approve" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                    </form>
+                    {{end}}
+                    <form method="POST" action="/comments/{{.ID}}/delete" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Delete this comment?">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {{end}}
+        </tbody>
+    </table>
+    {{else}}
+    <p style="color: var(--text-muted);">No comments.</p>
+    {{end}}
+</div>
+{{end}}

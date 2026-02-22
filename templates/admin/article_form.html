@@ -1,0 +1,53 @@
+{{template "admin_base" .}}
+
+{{define "title"}}{{if .IsNew}}New Article{{else}}Edit Article{{end}} - Charon Admin{{end}}
+
+{{define "content"}}
+<h1 class="admin-title">{{if .IsNew}}New Article{{else}}Edit Article{{end}}</h1>
+
+{{if .Error}}
+<div class="alert alert-error">{{.Error}}</div>
+{{end}}
+
+<div class="admin-card">
+    <form method="POST" action="{{if .IsNew}}/articles{{else}}/articles/{{.Article.ID}}{{end}}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" id="title" name="title" value="{{.Article.Title}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="slug">Slug</label>
+            <input type="text" id="slug" name="slug" value="{{.Article.Slug}}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="excerpt">Excerpt</label>
+            <input type="text" id="excerpt" name="excerpt" value="{{.Article.Excerpt}}">
+        </div>
+
+        <div class="form-group">
+            <label for="content">Content</label>
+            <textarea id="content" name="content">{{.Article.Content}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="cover_image">Cover Image</label>
+            {{if .Article.CoverImage}}
+            <p style="margin-bottom: 0.5rem; color: var(--text-muted);">Current: {{.Article.CoverImage}}</p>
+            {{end}}
+            <input type="file" id="cover_image" name="cover_image" accept="image/*">
+        </div>
+
+        <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                <input type="checkbox" name="published" {{if .Article.Published}}checked{{end}} style="width: auto;">
+                Published
+            </label>
+        </div>
+
+        <button type="submit" class="btn">{{if .IsNew}}Create Article{{else}}Update Article{{end}}</button>
+        <a href="/articles" style="margin-left: 1rem; color: var(--text-muted);">Cancel</a>
+    </form>
+</div>
+{{end}}

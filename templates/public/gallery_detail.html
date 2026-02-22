@@ -1,0 +1,22 @@
+{{template "base" .}}
+
+{{define "title"}}{{.Gallery.Title}} - Charon MC{{end}}
+
+{{define "content"}}
+<div class="container">
+    <h1 class="section-title">{{.Gallery.Title}}</h1>
+    {{if .Gallery.Description}}<p style="color: var(--text-muted); margin-bottom: 1.5rem;">{{.Gallery.Description}}</p>{{end}}
+
+    {{if .Gallery.Images}}
+    <div class="gallery-images">
+        {{range .Gallery.Images}}
+        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">
+        {{end}}
+    </div>
+    {{else}}
+    <p style="color: var(--text-muted);">This gallery is empty.</p>
+    {{end}}
+
+    <p style="margin-top: 2rem;"><a href="/gallery">&larr; Back to galleries</a></p>
+</div>
+{{end}}
