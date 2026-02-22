@@ -10,9 +10,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//go:embed ../../migrations/*.sql
-var migrationsFS embed.FS
-
 func Connect(dsn string) (*sql.DB, error) {
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
@@ -26,7 +23,7 @@ func Connect(dsn string) (*sql.DB, error) {
 	return db, nil
 }
 
-func Migrate(db *sql.DB) error {
+func Migrate(db *sql.DB, migrationsFS embed.FS) error {
 	data, err := migrationsFS.ReadFile("migrations/001_initial.sql")
 	if err != nil {
 		return fmt.Errorf("failed to read migration file: %w", err)
