@@ -4,6 +4,7 @@
 
 {{define "content"}}
 <h1 class="admin-title">{{if .IsNew}}Nová galéria{{else}}Upraviť galériu{{end}}</h1>
+<p class="admin-subtitle">{{if .IsNew}}Vytvorte novú fotogalériu. Po vytvorení budete môcť nahrať obrázky.{{else}}Upravte galériu a spravujte jej obrázky.{{end}}</p>
 
 {{if .Error}}
 <div class="alert alert-error">{{.Error}}</div>
@@ -12,17 +13,20 @@
 <div class="admin-card">
     <form method="POST" action="{{if .IsNew}}/admin/galleries{{else}}/admin/galleries/{{.Gallery.ID}}{{end}}">
         <div class="form-group">
-            <label for="title">Názov</label>
+            <label for="title">Názov galérie</label>
+            <span class="form-hint">Názov, ktorý sa zobrazí návštevníkom na webe nad fotkami.</span>
             <input type="text" id="title" name="title" value="{{.Gallery.Title}}" required>
         </div>
 
         <div class="form-group">
-            <label for="description">Popis</label>
+            <label for="description">Popis galérie</label>
+            <span class="form-hint">Voliteľné. Krátky popis, o čom sú fotky v galérii (napr. „Fotky z výletu do Tatier").</span>
             <textarea id="description" name="description" style="min-height: 100px;">{{.Gallery.Description}}</textarea>
         </div>
 
         <div class="form-group">
-            <label for="article_id">Prepojený článok (voliteľné)</label>
+            <label for="article_id">Prepojený článok</label>
+            <span class="form-hint">Voliteľné. Ak vyberiete článok, galéria sa zobrazí priamo v ňom. Ak nechcete prepojiť, nechajte „Žiadny".</span>
             <select id="article_id" name="article_id">
                 <option value="">-- Žiadny --</option>
                 {{range .Articles}}
@@ -31,14 +35,17 @@
             </select>
         </div>
 
-        <button type="submit" class="btn">{{if .IsNew}}Vytvoriť galériu{{else}}Uložiť galériu{{end}}</button>
-        <a href="/admin/galleries" style="margin-left: 1rem; color: var(--text-muted);">Zrušiť</a>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 1.5rem;">
+            <button type="submit" class="btn">{{if .IsNew}}Vytvoriť galériu{{else}}Uložiť galériu{{end}}</button>
+            <a href="/admin/galleries" style="color: var(--text-muted);">Zrušiť a vrátiť sa späť</a>
+        </div>
     </form>
 </div>
 
 {{if not .IsNew}}
 <div class="admin-card" style="margin-top: 1.5rem;">
-    <h2 style="color: var(--chrome-light); margin-bottom: 1rem;">Obrázky</h2>
+    <h2 style="color: var(--chrome-light); margin-bottom: 0.5rem;">Obrázky v galérii</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Tu vidíte všetky obrázky v tejto galérii. Kliknutím na &times; pri obrázku ho zmažete.</p>
 
     {{if .Gallery.Images}}
     <div class="image-grid">
@@ -46,21 +53,22 @@
         <div class="image-grid-item">
             <img src="/uploads/{{.Filename}}" alt="{{.Caption}}">
             <form method="POST" action="/admin/images/{{.ID}}/delete" class="delete-btn">
-                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať tento obrázok?">&times;</button>
+                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tento obrázok? Táto akcia sa nedá vrátiť späť.">&times;</button>
             </form>
         </div>
         {{end}}
     </div>
     {{else}}
-    <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatiaľ žiadne obrázky.</p>
+    <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatiaľ žiadne obrázky. Použite formulár nižšie na nahratie fotiek.</p>
     {{end}}
 
-    <h3 style="color: var(--chrome-light); margin: 1.5rem 0 0.5rem;">Nahrať obrázky</h3>
+    <h3 style="color: var(--chrome-light); margin: 1.5rem 0 0.25rem;">Nahrať nové obrázky</h3>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Vyberte jeden alebo viac obrázkov z vášho zariadenia. Podporované formáty: JPG, PNG, GIF. Môžete vybrať viac súborov naraz.</p>
     <form method="POST" action="/admin/galleries/{{.Gallery.ID}}/images" enctype="multipart/form-data">
         <div class="form-group">
             <input type="file" name="images" multiple accept="image/*">
         </div>
-        <button type="submit" class="btn">Nahrať</button>
+        <button type="submit" class="btn">Nahrať obrázky</button>
     </form>
 </div>
 {{end}}

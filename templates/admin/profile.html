@@ -4,6 +4,7 @@
 
 {{define "content"}}
 <h1 class="admin-title">Môj profil</h1>
+<p class="admin-subtitle">Tu si môžete zmeniť svoje osobné údaje a heslo. Prezývku (prihlasovacie meno) nie je možné zmeniť.</p>
 
 {{if .Error}}
 <div class="alert alert-error">{{.Error}}</div>
@@ -16,27 +17,33 @@
 <div class="admin-card">
     <form method="POST" action="/admin/profile">
         <div class="form-group">
-            <label>Prezývka</label>
+            <label>Prezývka (prihlasovacie meno)</label>
+            <span class="form-hint">Vaše prihlasovacie meno. Toto pole nie je možné zmeniť.</span>
             <input type="text" value="{{.User.Nickname}}" disabled style="opacity: 0.6;">
         </div>
 
         <div class="form-group">
             <label for="name">Meno</label>
+            <span class="form-hint">Vaše skutočné krstné meno.</span>
             <input type="text" id="name" name="name" value="{{.User.Name}}">
         </div>
 
         <div class="form-group">
             <label for="surname">Priezvisko</label>
+            <span class="form-hint">Vaše skutočné priezvisko.</span>
             <input type="text" id="surname" name="surname" value="{{.User.Surname}}">
         </div>
 
         <div class="form-group">
-            <label for="password">Nové heslo (ponechajte prázdne pre zachovanie aktuálneho)</label>
+            <label for="password">Nové heslo</label>
+            <span class="form-hint">Ponechajte prázdne, ak nechcete meniť aktuálne heslo. Ak vyplníte, staré heslo sa nahradí novým.</span>
             <input type="password" id="password" name="password">
         </div>
 
-        <button type="submit" class="btn">Uložiť profil</button>
-        <a href="/admin" style="margin-left: 1rem; color: var(--text-muted);">Zrušiť</a>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 1.5rem;">
+            <button type="submit" class="btn">Uložiť profil</button>
+            <a href="/admin" style="color: var(--text-muted);">Zrušiť a vrátiť sa späť</a>
+        </div>
     </form>
 </div>
 {{end}}

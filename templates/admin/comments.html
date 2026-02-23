@@ -4,9 +4,12 @@
 
 {{define "content"}}
 <h1 class="admin-title">Moderovanie komentárov</h1>
+<p class="admin-subtitle">Tu schvaľujete alebo mažete komentáre, ktoré návštevníci napísali pod články. Komentáre so stavom „Čaká" nie sú viditeľné na webe, kým ich neschválite.</p>
 
 <div class="admin-card">
     {{if .Comments}}
+    <!-- Desktop table -->
+    <div class="desktop-table table-wrapper">
     <table class="admin-table">
         <thead>
             <tr>
@@ -33,15 +36,43 @@
                     </form>
                     {{end}}
                     <form method="POST" action="/admin/comments/{{.ID}}/delete" style="display:inline;">
-                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať tento komentár?">Zmazať</button>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tento komentár?">Zmazať</button>
                     </form>
                 </td>
             </tr>
             {{end}}
         </tbody>
     </table>
+    </div>
+    <!-- Mobile cards -->
+    <div class="mobile-cards">
+        {{range .Comments}}
+        <div class="mobile-card">
+            <div class="mobile-card-title">{{.AuthorName}}</div>
+            <div style="color: var(--chrome-light); font-size: 0.9rem; margin-bottom: 0.5rem; line-height: 1.4;">{{.Content}}</div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Stav:</span>
+                {{if .Approved}}<span class="badge badge-yes">Schválené</span>{{else}}<span class="badge badge-no">Čaká na schválenie</span>{{end}}
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Dátum:</span>
+                <span>{{.CreatedAt.Format "2006-01-02"}}</span>
+            </div>
+            <div class="mobile-card-actions">
+                {{if not .Approved}}
+                <form method="POST" action="/admin/comments/{{.ID}}/approve" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-success">Schváliť</button>
+                </form>
+                {{end}}
+                <form method="POST" action="/admin/comments/{{.ID}}/delete" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tento komentár?">Zmazať</button>
+                </form>
+            </div>
+        </div>
+        {{end}}
+    </div>
     {{else}}
-    <p style="color: var(--text-muted);">Žiadne komentáre.</p>
+    <p style="color: var(--text-muted);">Žiadne komentáre na moderovanie. Komentáre sa objavia, keď ich návštevníci napíšu pod články s povolenými komentármi.</p>
     {{end}}
 </div>
 {{end}}

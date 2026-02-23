@@ -4,12 +4,21 @@
 
 {{define "content"}}
 <h1 class="admin-title">Nastavenia</h1>
+<p class="admin-subtitle">Globálne nastavenia webu.</p>
 
 {{if .Saved}}
 <div class="alert alert-success">Nastavenia boli úspešne uložené.</div>
 {{end}}
 
 <div class="admin-card">
-    <p style="color: var(--text-muted);">Komentáre je možné povoliť alebo zakázať pri každom článku zvlášť v úprave článku.</p>
+    <div class="help-box">
+        <strong>Komentáre:</strong> Komentáre je možné povoliť alebo zakázať pri každom článku zvlášť. Toto nastavenie nájdete pri úprave článku &mdash; zaškrtnite alebo odškrtnite políčko „Povoliť komentáre".
+    </div>
+    <div class="help-box">
+        <strong>Galérie:</strong> Galériu je možné prepojiť s článkom pri jej úprave. Fotky sa potom zobrazia priamo v článku.
+    </div>
+    <div class="help-box">
+        <strong>Používatelia:</strong> Nových používateľov môže vytvárať len administrátor v sekcii „Používatelia".
+    </div>
 </div>
 {{end}}

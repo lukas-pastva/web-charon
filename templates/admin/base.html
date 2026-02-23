@@ -15,55 +15,115 @@
             --chrome: #c0c0c0;
             --chrome-light: #e0e0e0;
             --text-muted: #888888;
+            --admin-stripe: #b91c1c;
         }
-        body { background: var(--black); color: var(--chrome); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        * { box-sizing: border-box; }
+        body { background: var(--black); color: var(--chrome); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; }
         a { color: var(--flame); text-decoration: none; }
         a:hover { color: var(--chrome-light); }
-        .admin-nav { background: var(--dark-gray); border-bottom: 2px solid var(--flame); padding: 1rem 2rem; }
-        .admin-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .admin-brand { font-size: 1.25rem; font-weight: 900; color: var(--flame); text-transform: uppercase; letter-spacing: 2px; }
-        .admin-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
-        .admin-links a { color: var(--chrome); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; }
-        .admin-links a:hover { color: var(--flame); }
-        .admin-container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-        .admin-title { font-size: 1.5rem; font-weight: 800; color: var(--chrome-light); margin-bottom: 1.5rem; }
-        .admin-card { background: var(--dark-gray); border: 1px solid var(--charcoal); border-radius: 4px; padding: 1.5rem; margin-bottom: 1rem; }
+
+        /* Admin stripe - clearly marks this is not a public page */
+        .admin-stripe { background: var(--admin-stripe); color: #fff; text-align: center; padding: 0.35rem 1rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; }
+
+        .admin-nav { background: var(--dark-gray); border-bottom: 2px solid var(--flame); padding: 0.75rem 1rem; }
+        .admin-nav-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .admin-brand { font-size: 1.1rem; font-weight: 900; color: var(--flame); text-transform: uppercase; letter-spacing: 2px; white-space: nowrap; }
+
+        /* Hamburger menu button */
+        .admin-menu-btn { display: none; background: none; border: 1px solid var(--charcoal); border-radius: 4px; color: var(--chrome); padding: 0.4rem 0.6rem; cursor: pointer; font-size: 1.25rem; line-height: 1; }
+
+        .admin-links { display: flex; gap: 1rem; list-style: none; flex-wrap: wrap; margin: 0; padding: 0; align-items: center; }
+        .admin-links a, .admin-links button { color: var(--chrome); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .admin-links a:hover, .admin-links button:hover { color: var(--flame); }
+        .admin-links .logout-btn { background: none; border: none; cursor: pointer; padding: 0; font-family: inherit; }
+
+        .admin-container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
+        .admin-title { font-size: 1.5rem; font-weight: 800; color: var(--chrome-light); margin-bottom: 0.5rem; }
+        .admin-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5; }
+        .admin-card { background: var(--dark-gray); border: 1px solid var(--charcoal); border-radius: 4px; padding: 1.25rem; margin-bottom: 1rem; }
+
+        /* Responsive table wrapper */
+        .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
         .admin-table { width: 100%; border-collapse: collapse; }
-        .admin-table th { text-align: left; padding: 0.75rem; border-bottom: 2px solid var(--charcoal); color: var(--flame); font-size: 0.85rem; text-transform: uppercase; }
+        .admin-table th { text-align: left; padding: 0.75rem; border-bottom: 2px solid var(--charcoal); color: var(--flame); font-size: 0.8rem; text-transform: uppercase; white-space: nowrap; }
         .admin-table td { padding: 0.75rem; border-bottom: 1px solid var(--charcoal); }
-        .btn { display: inline-block; padding: 0.5rem 1rem; background: var(--flame); color: #fff; border: none; border-radius: 4px; font-weight: 700; font-size: 0.85rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+
+        .btn { display: inline-block; padding: 0.6rem 1.2rem; background: var(--flame); color: #fff; border: none; border-radius: 4px; font-weight: 700; font-size: 0.85rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; min-height: 44px; line-height: 1.4; text-align: center; }
         .btn:hover { background: var(--flame-dark); color: #fff; }
-        .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+        .btn-sm { padding: 0.4rem 0.7rem; font-size: 0.75rem; min-height: 36px; }
         .btn-danger { background: #c0392b; }
         .btn-danger:hover { background: #a93226; }
         .btn-success { background: #27ae60; }
         .btn-success:hover { background: #219a52; }
-        .form-group { margin-bottom: 1rem; }
+
+        .form-group { margin-bottom: 1.25rem; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 0.25rem; color: var(--chrome); }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.6rem; background: var(--charcoal); border: 1px solid #444; border-radius: 4px; color: var(--chrome-light); font-size: 1rem; font-family: inherit; }
+        .form-group .form-hint { display: block; color: var(--text-muted); font-size: 0.8rem; font-weight: 400; margin-bottom: 0.4rem; line-height: 1.4; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.7rem; background: var(--charcoal); border: 1px solid #444; border-radius: 4px; color: var(--chrome-light); font-size: 1rem; font-family: inherit; min-height: 44px; }
         .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--flame); }
         .form-group textarea { min-height: 200px; resize: vertical; }
-        .alert { padding: 0.75rem 1rem; border-radius: 4px; margin-bottom: 1rem; }
+
+        .alert { padding: 0.75rem 1rem; border-radius: 4px; margin-bottom: 1rem; font-size: 0.9rem; }
         .alert-error { background: rgba(192,57,43,0.15); border: 1px solid #c0392b; color: #e74c3c; }
         .alert-success { background: rgba(39,174,96,0.15); border: 1px solid #27ae60; color: #2ecc71; }
+
         .badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 3px; font-size: 0.75rem; font-weight: 700; }
         .badge-yes { background: rgba(39,174,96,0.2); color: #2ecc71; }
         .badge-no { background: rgba(192,57,43,0.2); color: #e74c3c; }
-        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .stat-card { background: var(--dark-gray); border: 1px solid var(--charcoal); border-radius: 4px; padding: 1.5rem; text-align: center; }
+
+        .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: var(--dark-gray); border: 1px solid var(--charcoal); border-radius: 4px; padding: 1.25rem; text-align: center; }
         .stat-number { font-size: 2.5rem; font-weight: 900; color: var(--flame); }
-        .stat-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; margin-top: 0.25rem; }
-        .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
+        .stat-label { color: var(--text-muted); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; margin-top: 0.25rem; }
+
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.75rem; margin: 1rem 0; }
         .image-grid-item { position: relative; }
-        .image-grid-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; border: 1px solid var(--charcoal); }
+        .image-grid-item img { width: 100%; height: 120px; object-fit: cover; border-radius: 4px; border: 1px solid var(--charcoal); }
         .image-grid-item .delete-btn { position: absolute; top: 4px; right: 4px; }
+
+        /* Help info box */
+        .help-box { background: rgba(255,107,0,0.08); border: 1px solid rgba(255,107,0,0.25); border-radius: 4px; padding: 0.75rem 1rem; margin-bottom: 1.25rem; color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+
+        /* Quick action buttons - mobile friendly */
+        .quick-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+        /* Mobile card view for lists */
+        .mobile-cards { display: none; }
+        .mobile-card { background: var(--dark-gray); border: 1px solid var(--charcoal); border-radius: 4px; padding: 1rem; margin-bottom: 0.75rem; }
+        .mobile-card-title { color: var(--chrome-light); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+        .mobile-card-row { display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0; font-size: 0.85rem; }
+        .mobile-card-label { color: var(--text-muted); }
+        .mobile-card-actions { display: flex; gap: 0.5rem; margin-top: 0.75rem; flex-wrap: wrap; }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .admin-menu-btn { display: block; }
+            .admin-links { display: none; flex-direction: column; width: 100%; gap: 0; padding-top: 0.75rem; }
+            .admin-links.open { display: flex; }
+            .admin-links li { padding: 0.6rem 0; border-top: 1px solid var(--charcoal); }
+            .admin-links a, .admin-links button { font-size: 0.9rem; display: block; padding: 0.25rem 0; }
+            .admin-nav-inner { flex-wrap: wrap; }
+            .admin-container { padding: 1rem 0.75rem; }
+            .admin-title { font-size: 1.25rem; }
+            .stat-number { font-size: 2rem; }
+
+            /* Hide desktop table, show mobile cards */
+            .desktop-table { display: none; }
+            .mobile-cards { display: block; }
+
+            .page-header { flex-direction: column; align-items: flex-start !important; gap: 0.75rem; }
+            .page-header .btn { width: 100%; text-align: center; }
+        }
     </style>
 </head>
 <body>
+    <div class="admin-stripe">Interná administrácia &mdash; len pre prihlásených používateľov</div>
+
     <nav class="admin-nav">
         <div class="admin-nav-inner">
-            <a href="/admin" class="admin-brand">Charon Administrácia</a>
-            <ul class="admin-links">
+            <a href="/admin" class="admin-brand">Charon Admin</a>
+            <button class="admin-menu-btn" onclick="document.getElementById('adminMenu').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+            <ul class="admin-links" id="adminMenu">
                 <li><a href="/admin">Prehľad</a></li>
                 <li><a href="/admin/articles">Články</a></li>
                 <li><a href="/admin/galleries">Galérie</a></li>
@@ -73,7 +133,7 @@
                 <li><a href="/admin/profile">Profil</a></li>
                 <li>
                     <form method="POST" action="/admin/logout" style="display:inline;">
-                        <button type="submit" style="background:none;border:none;color:var(--chrome);font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:0;">Odhlásiť</button>
+                        <button type="submit" class="logout-btn admin-links">Odhlásiť</button>
                     </form>
                 </li>
             </ul>

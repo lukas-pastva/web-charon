@@ -4,26 +4,33 @@
 
 {{define "content"}}
 <h1 class="admin-title">Prehľad</h1>
+<p class="admin-subtitle">Vitajte v administrácii webu Motoklub Charon. Tu vidíte súhrn obsahu na webe a rýchle odkazy na najčastejšie úkony.</p>
 
 <div class="stat-grid">
     <div class="stat-card">
         <div class="stat-number">{{.ArticleCount}}</div>
         <div class="stat-label">Články</div>
+        <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">Celkový počet článkov na webe</div>
     </div>
     <div class="stat-card">
         <div class="stat-number">{{.GalleryCount}}</div>
         <div class="stat-label">Galérie</div>
+        <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">Fotogalérie s obrázkami</div>
     </div>
     <div class="stat-card">
         <div class="stat-number">{{.PendingCount}}</div>
         <div class="stat-label">Čakajúce komentáre</div>
+        <div style="color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">Komentáre čakajúce na schválenie</div>
     </div>
 </div>
 
 <div class="admin-card">
-    <h2 style="color: var(--chrome-light); margin-bottom: 1rem;">Rýchle akcie</h2>
-    <a href="/admin/articles/new" class="btn" style="margin-right: 0.5rem;">Nový článok</a>
-    <a href="/admin/galleries/new" class="btn" style="margin-right: 0.5rem;">Nová galéria</a>
-    <a href="/admin/comments" class="btn">Moderovať komentáre</a>
+    <h2 style="color: var(--chrome-light); margin-bottom: 0.5rem;">Rýchle akcie</h2>
+    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Najčastejšie úkony &mdash; kliknite pre rýchly prístup.</p>
+    <div class="quick-actions">
+        <a href="/admin/articles/new" class="btn">Nový článok</a>
+        <a href="/admin/galleries/new" class="btn">Nová galéria</a>
+        <a href="/admin/comments" class="btn">Moderovať komentáre</a>
+    </div>
 </div>
 {{end}}

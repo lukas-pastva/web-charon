@@ -3,20 +3,23 @@
 {{define "title"}}Používatelia - Charon Administrácia{{end}}
 
 {{define "content"}}
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
     <h1 class="admin-title" style="margin-bottom: 0;">Používatelia</h1>
     <a href="/admin/users/new" class="btn">Nový používateľ</a>
 </div>
+<p class="admin-subtitle">Správa používateľov, ktorí sa môžu prihlásiť do tejto administrácie. Administrátori majú prístup k správe používateľov, bežní používatelia môžu spravovať obsah (články, galérie, komentáre).</p>
 
 <div class="admin-card">
     {{if .Users}}
+    <!-- Desktop table -->
+    <div class="desktop-table table-wrapper">
     <table class="admin-table">
         <thead>
             <tr>
-                <th>Prezývka</th>
+                <th>Prezývka (login)</th>
                 <th>Meno</th>
                 <th>Priezvisko</th>
-                <th>Admin</th>
+                <th>Rola</th>
                 <th>Vytvorené</th>
                 <th>Akcie</th>
             </tr>
@@ -28,21 +31,48 @@
                 <td>{{.Name}}</td>
                 <td>{{.Surname}}</td>
                 <td>
-                    {{if .IsAdmin}}<span class="badge badge-yes">Admin</span>{{else}}<span class="badge badge-no">Používateľ</span>{{end}}
+                    {{if .IsAdmin}}<span class="badge badge-yes">Administrátor</span>{{else}}<span class="badge badge-no">Používateľ</span>{{end}}
                 </td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
-                <td>
+                <td style="white-space: nowrap;">
                     <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upraviť</a>
                     <form method="POST" action="/admin/users/{{.ID}}/delete" style="display:inline;">
-                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať tohto používateľa?">Zmazať</button>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tohto používateľa? Používateľ sa už nebude môcť prihlásiť.">Zmazať</button>
                     </form>
                 </td>
             </tr>
             {{end}}
         </tbody>
     </table>
+    </div>
+    <!-- Mobile cards -->
+    <div class="mobile-cards">
+        {{range .Users}}
+        <div class="mobile-card">
+            <div class="mobile-card-title">{{.Nickname}}</div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Meno:</span>
+                <span>{{.Name}} {{.Surname}}</span>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Rola:</span>
+                {{if .IsAdmin}}<span class="badge badge-yes">Administrátor</span>{{else}}<span class="badge badge-no">Používateľ</span>{{end}}
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Vytvorené:</span>
+                <span>{{.CreatedAt.Format "2006-01-02"}}</span>
+            </div>
+            <div class="mobile-card-actions">
+                <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm">Upraviť</a>
+                <form method="POST" action="/admin/users/{{.ID}}/delete" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tohto používateľa? Používateľ sa už nebude môcť prihlásiť.">Zmazať</button>
+                </form>
+            </div>
+        </div>
+        {{end}}
+    </div>
     {{else}}
-    <p style="color: var(--text-muted);">Zatiaľ žiadni používatelia.</p>
+    <p style="color: var(--text-muted);">Zatiaľ žiadni používatelia. Kliknite na „Nový používateľ" pre vytvorenie prvého účtu.</p>
     {{end}}
 </div>
 {{end}}

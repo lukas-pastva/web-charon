@@ -3,18 +3,21 @@
 {{define "title"}}Galérie - Charon Administrácia{{end}}
 
 {{define "content"}}
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+<div class="page-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
     <h1 class="admin-title" style="margin-bottom: 0;">Galérie</h1>
     <a href="/admin/galleries/new" class="btn">Nová galéria</a>
 </div>
+<p class="admin-subtitle">Fotogalérie s obrázkami. Galériu je možné prepojiť s článkom, aby sa zobrazila priamo v ňom. Obrázky nahráte po vytvorení galérie.</p>
 
 <div class="admin-card">
     {{if .Galleries}}
+    <!-- Desktop table -->
+    <div class="desktop-table table-wrapper">
     <table class="admin-table">
         <thead>
             <tr>
                 <th>Názov</th>
-                <th>Webový identifikátor</th>
+                <th>Adresa</th>
                 <th>Obrázky</th>
                 <th>Vytvorené</th>
                 <th>Akcie</th>
@@ -24,21 +27,48 @@
             {{range .Galleries}}
             <tr>
                 <td style="color: var(--chrome-light); font-weight: 600;">{{.Title}}</td>
-                <td><code style="color: var(--text-muted);">{{.Slug}}</code></td>
+                <td><code style="color: var(--text-muted); font-size: 0.8rem;">{{.Slug}}</code></td>
                 <td>{{len .Images}}</td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
-                <td>
+                <td style="white-space: nowrap;">
                     <a href="/admin/galleries/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upraviť</a>
                     <form method="POST" action="/admin/galleries/{{.ID}}/delete" style="display:inline;">
-                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať túto galériu a všetky jej obrázky?">Zmazať</button>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať túto galériu a všetky jej obrázky? Táto akcia sa nedá vrátiť späť.">Zmazať</button>
                     </form>
                 </td>
             </tr>
             {{end}}
         </tbody>
     </table>
+    </div>
+    <!-- Mobile cards -->
+    <div class="mobile-cards">
+        {{range .Galleries}}
+        <div class="mobile-card">
+            <div class="mobile-card-title">{{.Title}}</div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Adresa na webe:</span>
+                <code style="color: var(--text-muted); font-size: 0.8rem;">{{.Slug}}</code>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Počet obrázkov:</span>
+                <span>{{len .Images}}</span>
+            </div>
+            <div class="mobile-card-row">
+                <span class="mobile-card-label">Vytvorené:</span>
+                <span>{{.CreatedAt.Format "2006-01-02"}}</span>
+            </div>
+            <div class="mobile-card-actions">
+                <a href="/admin/galleries/{{.ID}}/edit" class="btn btn-sm">Upraviť</a>
+                <form method="POST" action="/admin/galleries/{{.ID}}/delete" style="display:inline;">
+                    <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať túto galériu a všetky jej obrázky? Táto akcia sa nedá vrátiť späť.">Zmazať</button>
+                </form>
+            </div>
+        </div>
+        {{end}}
+    </div>
     {{else}}
-    <p style="color: var(--text-muted);">Zatiaľ žiadne galérie.</p>
+    <p style="color: var(--text-muted);">Zatiaľ žiadne galérie. Kliknite na „Nová galéria" pre vytvorenie prvej galérie.</p>
     {{end}}
 </div>
 {{end}}
