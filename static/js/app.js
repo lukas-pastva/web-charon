@@ -1,4 +1,4 @@
-// Web Charon - Motoristický klub Charon
+// Web Charon - Motoklub Charon
 
 document.addEventListener('DOMContentLoaded', function () {
     // Mobile nav toggle
