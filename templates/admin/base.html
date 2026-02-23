@@ -1,9 +1,9 @@
 {{define "admin_base"}}<!DOCTYPE html>
-<html lang="cs">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{block "title" .}}Admin - Charon MC{{end}}</title>
+    <title>{{block "title" .}}Admin - Motoristický klub Charon{{end}}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -62,18 +62,18 @@
 <body>
     <nav class="admin-nav">
         <div class="admin-nav-inner">
-            <a href="/admin" class="admin-brand">Charon Administrace</a>
+            <a href="/admin" class="admin-brand">Charon Administrácia</a>
             <ul class="admin-links">
-                <li><a href="/admin">Přehled</a></li>
+                <li><a href="/admin">Prehľad</a></li>
                 <li><a href="/admin/articles">Články</a></li>
-                <li><a href="/admin/galleries">Galerie</a></li>
-                <li><a href="/admin/comments">Komentáře</a></li>
-                <li><a href="/admin/settings">Nastavení</a></li>
-                <li><a href="/admin/users">Uživatelé</a></li>
+                <li><a href="/admin/galleries">Galérie</a></li>
+                <li><a href="/admin/comments">Komentáre</a></li>
+                <li><a href="/admin/settings">Nastavenia</a></li>
+                <li><a href="/admin/users">Používatelia</a></li>
                 <li><a href="/admin/profile">Profil</a></li>
                 <li>
                     <form method="POST" action="/admin/logout" style="display:inline;">
-                        <button type="submit" style="background:none;border:none;color:var(--chrome);font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:0;">Odhlásit</button>
+                        <button type="submit" style="background:none;border:none;color:var(--chrome);font-weight:600;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;padding:0;">Odhlásiť</button>
                     </form>
                 </li>
             </ul>

@@ -1,16 +1,16 @@
 {{template "base" .}}
 
-{{define "title"}}Charon MC - Domů{{end}}
+{{define "title"}}Motoristický klub Charon - Domov{{end}}
 
 {{define "content"}}
 <div class="hero">
-    <h1>Charon MC</h1>
-    <p>Zrozeni k jízdě. Vykováni z oceli. Vítejte v bratrstvu.</p>
+    <h1>Motoristický klub Charon</h1>
+    <p>Zrodení k jazde. Vykovaní z ocele. Vitajte v bratstve.</p>
 </div>
 
 <div class="container">
     {{if .Articles}}
-    <h2 class="section-title">Nejnovější články</h2>
+    <h2 class="section-title">Najnovšie články</h2>
     <div class="article-grid">
         {{range .Articles}}
         <a href="/articles/{{.Slug}}" class="article-card">
@@ -28,7 +28,7 @@
     {{end}}
 
     {{if .FeaturedGallery}}
-    <h2 class="section-title" style="margin-top: 3rem;">Vybraná galerie</h2>
+    <h2 class="section-title" style="margin-top: 3rem;">Vybraná galéria</h2>
     <div class="gallery-images">
         {{range .FeaturedGallery.Images}}
         <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">

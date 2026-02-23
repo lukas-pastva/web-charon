@@ -1,6 +1,8 @@
-/* Web Charon - Dark Chopper Theme */
+/* Web Charon - Motoristický klub Charon */
 
-:root {
+/* Theme: Plameň (Orange) - default */
+:root,
+[data-theme="flame"] {
     --black: #0a0a0a;
     --dark-gray: #1a1a1a;
     --charcoal: #2d2d2d;
@@ -9,6 +11,30 @@
     --chrome: #c0c0c0;
     --chrome-light: #e0e0e0;
     --text-muted: #888888;
+}
+
+/* Theme: Červená (Red Racing) */
+[data-theme="red"] {
+    --black: #0a0a0a;
+    --dark-gray: #1a1010;
+    --charcoal: #2d1a1a;
+    --flame: #dc2626;
+    --flame-dark: #b91c1c;
+    --chrome: #c0c0c0;
+    --chrome-light: #e0e0e0;
+    --text-muted: #888888;
+}
+
+/* Theme: Temná oceľ (Dark Steel) */
+[data-theme="steel"] {
+    --black: #080a0c;
+    --dark-gray: #121620;
+    --charcoal: #1e2536;
+    --flame: #64748b;
+    --flame-dark: #475569;
+    --chrome: #94a3b8;
+    --chrome-light: #cbd5e1;
+    --text-muted: #64748b;
 }
 
 * {
@@ -51,6 +77,7 @@ a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .nav-brand {
@@ -59,6 +86,12 @@ a:hover {
     color: var(--flame);
     text-transform: uppercase;
     letter-spacing: 2px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .nav-links {
@@ -86,6 +119,27 @@ a:hover {
     color: var(--chrome);
     font-size: 1.5rem;
     cursor: pointer;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--charcoal);
+    color: var(--chrome);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s, transform 0.3s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--flame);
+    color: var(--flame);
+    transform: rotate(30deg);
 }
 
 /* Hero */
@@ -519,6 +573,10 @@ a:hover {
 
     .nav-links.active {
         display: flex;
+    }
+
+    .nav-brand {
+        font-size: 1.1rem;
     }
 
     .hero h1 {

@@ -1,11 +1,11 @@
 {{template "admin_base" .}}
 
-{{define "title"}}Články - Charon Administrace{{end}}
+{{define "title"}}Články - Charon Administrácia{{end}}
 
 {{define "content"}}
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
     <h1 class="admin-title" style="margin-bottom: 0;">Články</h1>
-    <a href="/admin/articles/new" class="btn">Nový článek</a>
+    <a href="/admin/articles/new" class="btn">Nový článok</a>
 </div>
 
 <div class="admin-card">
@@ -13,11 +13,11 @@
     <table class="admin-table">
         <thead>
             <tr>
-                <th>Název</th>
+                <th>Názov</th>
                 <th>Webový identifikátor</th>
-                <th>Publikováno</th>
-                <th>Vytvořeno</th>
-                <th>Akce</th>
+                <th>Publikované</th>
+                <th>Vytvorené</th>
+                <th>Akcie</th>
             </tr>
         </thead>
         <tbody>
@@ -26,13 +26,13 @@
                 <td style="color: var(--chrome-light); font-weight: 600;">{{.Title}}</td>
                 <td><code style="color: var(--text-muted);">{{.Slug}}</code></td>
                 <td>
-                    {{if .Published}}<span class="badge badge-yes">Ano</span>{{else}}<span class="badge badge-no">Ne</span>{{end}}
+                    {{if .Published}}<span class="badge badge-yes">Áno</span>{{else}}<span class="badge badge-no">Nie</span>{{end}}
                 </td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
                 <td>
-                    <a href="/admin/articles/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upravit</a>
+                    <a href="/admin/articles/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upraviť</a>
                     <form method="POST" action="/admin/articles/{{.ID}}/delete" style="display:inline;">
-                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Smazat tento článek?">Smazat</button>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať tento článok?">Zmazať</button>
                     </form>
                 </td>
             </tr>
@@ -40,7 +40,7 @@
         </tbody>
     </table>
     {{else}}
-    <p style="color: var(--text-muted);">Zatím žádné články.</p>
+    <p style="color: var(--text-muted);">Zatiaľ žiadne články.</p>
     {{end}}
 </div>
 {{end}}

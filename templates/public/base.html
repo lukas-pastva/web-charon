@@ -1,21 +1,29 @@
 {{define "base"}}<!DOCTYPE html>
-<html lang="cs">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{block "title" .}}Charon MC{{end}}</title>
+    <title>{{block "title" .}}Motoristický klub Charon{{end}}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <nav class="nav">
         <div class="nav-inner">
-            <a href="/" class="nav-brand">Charon MC</a>
-            <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+            <a href="/" class="nav-brand">Motoristický klub Charon</a>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Zmeniť tému" title="Zmeniť tému">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                    </svg>
+                </button>
+                <button class="nav-toggle" aria-label="Menu">&#9776;</button>
+            </div>
             <ul class="nav-links">
-                <li><a href="/">Domů</a></li>
+                <li><a href="/">Domov</a></li>
                 <li><a href="/articles">Články</a></li>
-                <li><a href="/gallery">Galerie</a></li>
+                <li><a href="/gallery">Galéria</a></li>
             </ul>
         </div>
     </nav>
@@ -23,7 +31,7 @@
     {{block "content" .}}{{end}}
 
     <footer class="footer">
-        <p>&copy; Charon MC. Jízda na svobodě.</p>
+        <p>&copy; Motoristický klub Charon. Jazda na slobode.</p>
     </footer>
 
     <script src="/static/js/app.js"></script>

@@ -1,6 +1,6 @@
 {{template "base" .}}
 
-{{define "title"}}{{.Article.Title}} - Charon MC{{end}}
+{{define "title"}}{{.Article.Title}} - Motoristický klub Charon{{end}}
 
 {{define "content"}}
 <div class="container">
@@ -9,12 +9,12 @@
         <img src="/uploads/{{.Article.CoverImage}}" alt="{{.Article.Title}}" class="article-cover">
         {{end}}
         <h1>{{.Article.Title}}</h1>
-        <div class="meta">{{.Article.CreatedAt.Format "2. 1. 2006 v 15:04"}}</div>
+        <div class="meta">{{.Article.CreatedAt.Format "2. 1. 2006 o 15:04"}}</div>
         <div class="body">{{nl2br .Article.Content}}</div>
     </div>
 
     {{if .Gallery}}
-    <h2 class="section-title">Galerie</h2>
+    <h2 class="section-title">Galéria</h2>
     <div class="gallery-images">
         {{range .Gallery.Images}}
         <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">
@@ -24,31 +24,31 @@
 
     {{if .CommentsEnabled}}
     <div class="comments-section">
-        <h2 class="section-title">Komentáře</h2>
+        <h2 class="section-title">Komentáre</h2>
 
         {{if .Comments}}
         {{range .Comments}}
         <div class="comment">
             <div class="comment-author">{{.AuthorName}}</div>
-            <div class="comment-date">{{.CreatedAt.Format "2. 1. 2006 v 15:04"}}</div>
+            <div class="comment-date">{{.CreatedAt.Format "2. 1. 2006 o 15:04"}}</div>
             <div class="comment-body">{{nl2br .Content}}</div>
         </div>
         {{end}}
         {{else}}
-        <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatím žádné komentáře. Buďte první!</p>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatiaľ žiadne komentáre. Buďte prvý!</p>
         {{end}}
 
-        <h3 style="color: var(--chrome-light); margin: 1.5rem 0 1rem;">Napište komentář</h3>
+        <h3 style="color: var(--chrome-light); margin: 1.5rem 0 1rem;">Napíšte komentár</h3>
         <form method="POST" action="/articles/{{.Article.Slug}}/comments">
             <div class="form-group">
-                <label for="author_name">Jméno</label>
+                <label for="author_name">Meno</label>
                 <input type="text" id="author_name" name="author_name" required>
             </div>
             <div class="form-group">
-                <label for="content">Komentář</label>
+                <label for="content">Komentár</label>
                 <textarea id="content" name="content" required></textarea>
             </div>
-            <button type="submit" class="btn">Odeslat komentář</button>
+            <button type="submit" class="btn">Odoslať komentár</button>
         </form>
     </div>
     {{end}}

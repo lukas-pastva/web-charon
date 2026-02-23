@@ -1,6 +1,6 @@
 {{template "base" .}}
 
-{{define "title"}}Články - Charon MC{{end}}
+{{define "title"}}Články - Motoristický klub Charon{{end}}
 
 {{define "content"}}
 <div class="container">
@@ -23,12 +23,12 @@
     </div>
 
     <div class="pagination">
-        {{if .HasPrev}}<a href="/articles?page={{.PrevPage}}">&laquo; Předchozí</a>{{end}}
+        {{if .HasPrev}}<a href="/articles?page={{.PrevPage}}">&laquo; Predchádzajúca</a>{{end}}
         <span>Strana {{.Page}} z {{.TotalPages}}</span>
-        {{if .HasNext}}<a href="/articles?page={{.NextPage}}">Další &raquo;</a>{{end}}
+        {{if .HasNext}}<a href="/articles?page={{.NextPage}}">Ďalšia &raquo;</a>{{end}}
     </div>
     {{else}}
-    <p style="color: var(--text-muted);">Zatím žádné články. Zkuste to později.</p>
+    <p style="color: var(--text-muted);">Zatiaľ žiadne články. Skúste to neskôr.</p>
     {{end}}
 </div>
 {{end}}

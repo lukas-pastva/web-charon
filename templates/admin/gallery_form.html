@@ -1,9 +1,9 @@
 {{template "admin_base" .}}
 
-{{define "title"}}{{if .IsNew}}Nová galerie{{else}}Upravit galerii{{end}} - Charon Administrace{{end}}
+{{define "title"}}{{if .IsNew}}Nová galéria{{else}}Upraviť galériu{{end}} - Charon Administrácia{{end}}
 
 {{define "content"}}
-<h1 class="admin-title">{{if .IsNew}}Nová galerie{{else}}Upravit galerii{{end}}</h1>
+<h1 class="admin-title">{{if .IsNew}}Nová galéria{{else}}Upraviť galériu{{end}}</h1>
 
 {{if .Error}}
 <div class="alert alert-error">{{.Error}}</div>
@@ -12,7 +12,7 @@
 <div class="admin-card">
     <form method="POST" action="{{if .IsNew}}/admin/galleries{{else}}/admin/galleries/{{.Gallery.ID}}{{end}}">
         <div class="form-group">
-            <label for="title">Název</label>
+            <label for="title">Názov</label>
             <input type="text" id="title" name="title" value="{{.Gallery.Title}}" required>
         </div>
 
@@ -22,17 +22,17 @@
         </div>
 
         <div class="form-group">
-            <label for="article_id">Propojený článek (volitelné)</label>
+            <label for="article_id">Prepojený článok (voliteľné)</label>
             <select id="article_id" name="article_id">
-                <option value="">-- Žádný --</option>
+                <option value="">-- Žiadny --</option>
                 {{range .Articles}}
                 <option value="{{.ID}}" {{if $.Gallery.ArticleID}}{{if eq .ID (deref $.Gallery.ArticleID)}}selected{{end}}{{end}}>{{.Title}}</option>
                 {{end}}
             </select>
         </div>
 
-        <button type="submit" class="btn">{{if .IsNew}}Vytvořit galerii{{else}}Uložit galerii{{end}}</button>
-        <a href="/admin/galleries" style="margin-left: 1rem; color: var(--text-muted);">Zrušit</a>
+        <button type="submit" class="btn">{{if .IsNew}}Vytvoriť galériu{{else}}Uložiť galériu{{end}}</button>
+        <a href="/admin/galleries" style="margin-left: 1rem; color: var(--text-muted);">Zrušiť</a>
     </form>
 </div>
 
@@ -46,21 +46,21 @@
         <div class="image-grid-item">
             <img src="/uploads/{{.Filename}}" alt="{{.Caption}}">
             <form method="POST" action="/admin/images/{{.ID}}/delete" class="delete-btn">
-                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Smazat tento obrázek?">&times;</button>
+                <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať tento obrázok?">&times;</button>
             </form>
         </div>
         {{end}}
     </div>
     {{else}}
-    <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatím žádné obrázky.</p>
+    <p style="color: var(--text-muted); margin-bottom: 1rem;">Zatiaľ žiadne obrázky.</p>
     {{end}}
 
-    <h3 style="color: var(--chrome-light); margin: 1.5rem 0 0.5rem;">Nahrát obrázky</h3>
+    <h3 style="color: var(--chrome-light); margin: 1.5rem 0 0.5rem;">Nahrať obrázky</h3>
     <form method="POST" action="/admin/galleries/{{.Gallery.ID}}/images" enctype="multipart/form-data">
         <div class="form-group">
             <input type="file" name="images" multiple accept="image/*">
         </div>
-        <button type="submit" class="btn">Nahrát</button>
+        <button type="submit" class="btn">Nahrať</button>
     </form>
 </div>
 {{end}}

@@ -1,9 +1,9 @@
 {{template "admin_base" .}}
 
-{{define "title"}}{{if .IsNew}}Nový článek{{else}}Upravit článek{{end}} - Charon Administrace{{end}}
+{{define "title"}}{{if .IsNew}}Nový článok{{else}}Upraviť článok{{end}} - Charon Administrácia{{end}}
 
 {{define "content"}}
-<h1 class="admin-title">{{if .IsNew}}Nový článek{{else}}Upravit článek{{end}}</h1>
+<h1 class="admin-title">{{if .IsNew}}Nový článok{{else}}Upraviť článok{{end}}</h1>
 
 {{if .Error}}
 <div class="alert alert-error">{{.Error}}</div>
@@ -12,12 +12,12 @@
 <div class="admin-card">
     <form method="POST" action="{{if .IsNew}}/admin/articles{{else}}/admin/articles/{{.Article.ID}}{{end}}" enctype="multipart/form-data">
         <div class="form-group">
-            <label for="title">Název</label>
+            <label for="title">Názov</label>
             <input type="text" id="title" name="title" value="{{.Article.Title}}" required>
         </div>
 
         <div class="form-group">
-            <label for="excerpt">Úryvek</label>
+            <label for="excerpt">Úryvok</label>
             <input type="text" id="excerpt" name="excerpt" value="{{.Article.Excerpt}}">
         </div>
 
@@ -27,9 +27,9 @@
         </div>
 
         <div class="form-group">
-            <label for="cover_image">Titulní obrázek</label>
+            <label for="cover_image">Titulný obrázok</label>
             {{if .Article.CoverImage}}
-            <p style="margin-bottom: 0.5rem; color: var(--text-muted);">Aktuální: {{.Article.CoverImage}}</p>
+            <p style="margin-bottom: 0.5rem; color: var(--text-muted);">Aktuálny: {{.Article.CoverImage}}</p>
             {{end}}
             <input type="file" id="cover_image" name="cover_image" accept="image/*">
         </div>
@@ -37,19 +37,19 @@
         <div class="form-group">
             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                 <input type="checkbox" name="published" {{if .Article.Published}}checked{{end}} style="width: auto;">
-                Publikováno
+                Publikované
             </label>
         </div>
 
         <div class="form-group">
             <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
                 <input type="checkbox" name="comments_enabled" {{if or .IsNew .Article.CommentsEnabled}}checked{{end}} style="width: auto;">
-                Povolit komentáře
+                Povoliť komentáre
             </label>
         </div>
 
-        <button type="submit" class="btn">{{if .IsNew}}Vytvořit článek{{else}}Uložit článek{{end}}</button>
-        <a href="/admin/articles" style="margin-left: 1rem; color: var(--text-muted);">Zrušit</a>
+        <button type="submit" class="btn">{{if .IsNew}}Vytvoriť článok{{else}}Uložiť článok{{end}}</button>
+        <a href="/admin/articles" style="margin-left: 1rem; color: var(--text-muted);">Zrušiť</a>
     </form>
 </div>
 {{end}}

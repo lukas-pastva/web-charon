@@ -1,11 +1,11 @@
 {{template "admin_base" .}}
 
-{{define "title"}}Galerie - Charon Administrace{{end}}
+{{define "title"}}Galérie - Charon Administrácia{{end}}
 
 {{define "content"}}
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-    <h1 class="admin-title" style="margin-bottom: 0;">Galerie</h1>
-    <a href="/admin/galleries/new" class="btn">Nová galerie</a>
+    <h1 class="admin-title" style="margin-bottom: 0;">Galérie</h1>
+    <a href="/admin/galleries/new" class="btn">Nová galéria</a>
 </div>
 
 <div class="admin-card">
@@ -13,11 +13,11 @@
     <table class="admin-table">
         <thead>
             <tr>
-                <th>Název</th>
+                <th>Názov</th>
                 <th>Webový identifikátor</th>
                 <th>Obrázky</th>
-                <th>Vytvořeno</th>
-                <th>Akce</th>
+                <th>Vytvorené</th>
+                <th>Akcie</th>
             </tr>
         </thead>
         <tbody>
@@ -28,9 +28,9 @@
                 <td>{{len .Images}}</td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
                 <td>
-                    <a href="/admin/galleries/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upravit</a>
+                    <a href="/admin/galleries/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upraviť</a>
                     <form method="POST" action="/admin/galleries/{{.ID}}/delete" style="display:inline;">
-                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Smazat tuto galerii a všechny její obrázky?">Smazat</button>
+                        <button type="submit" class="btn btn-sm btn-danger" data-confirm="Zmazať túto galériu a všetky jej obrázky?">Zmazať</button>
                     </form>
                 </td>
             </tr>
@@ -38,7 +38,7 @@
         </tbody>
     </table>
     {{else}}
-    <p style="color: var(--text-muted);">Zatím žádné galerie.</p>
+    <p style="color: var(--text-muted);">Zatiaľ žiadne galérie.</p>
     {{end}}
 </div>
 {{end}}

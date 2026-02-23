@@ -1,10 +1,10 @@
 {{template "base" .}}
 
-{{define "title"}}Galerie - Charon MC{{end}}
+{{define "title"}}Galéria - Motoristický klub Charon{{end}}
 
 {{define "content"}}
 <div class="container">
-    <h1 class="section-title">Galerie</h1>
+    <h1 class="section-title">Galéria</h1>
 
     {{if .Galleries}}
     <div class="gallery-grid">
@@ -21,7 +21,7 @@
         {{end}}
     </div>
     {{else}}
-    <p style="color: var(--text-muted);">Zatím žádné galerie. Zkuste to později.</p>
+    <p style="color: var(--text-muted);">Zatiaľ žiadne galérie. Skúste to neskôr.</p>
     {{end}}
 </div>
 {{end}}

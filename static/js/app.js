@@ -1,4 +1,4 @@
-// Web Charon - Gallery lightbox and UI helpers
+// Web Charon - Motoristický klub Charon
 
 document.addEventListener('DOMContentLoaded', function () {
     // Mobile nav toggle
@@ -10,9 +10,33 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Theme switcher
+    initThemeSwitcher();
+
     // Gallery lightbox
     initLightbox();
 });
+
+// Theme switcher with localStorage persistence
+function initThemeSwitcher() {
+    var themes = ['flame', 'red', 'steel'];
+    var btn = document.getElementById('themeToggle');
+    if (!btn) return;
+
+    // Load saved theme
+    var saved = localStorage.getItem('charon-theme');
+    if (saved && themes.indexOf(saved) !== -1) {
+        document.documentElement.setAttribute('data-theme', saved);
+    }
+
+    btn.addEventListener('click', function () {
+        var current = document.documentElement.getAttribute('data-theme') || 'flame';
+        var idx = themes.indexOf(current);
+        var next = themes[(idx + 1) % themes.length];
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('charon-theme', next);
+    });
+}
 
 function initLightbox() {
     const images = document.querySelectorAll('.gallery-images img');
@@ -22,9 +46,9 @@ function initLightbox() {
     const lightbox = document.createElement('div');
     lightbox.className = 'lightbox';
     lightbox.innerHTML = `
-        <button class="lightbox-close" aria-label="Zavřít">&times;</button>
-        <button class="lightbox-nav lightbox-prev" aria-label="Předchozí">&lsaquo;</button>
-        <button class="lightbox-nav lightbox-next" aria-label="Další">&rsaquo;</button>
+        <button class="lightbox-close" aria-label="Zavrieť">&times;</button>
+        <button class="lightbox-nav lightbox-prev" aria-label="Predchádzajúci">&lsaquo;</button>
+        <button class="lightbox-nav lightbox-next" aria-label="Ďalší">&rsaquo;</button>
         <img src="" alt="">
         <div class="lightbox-caption"></div>
     `;

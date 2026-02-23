@@ -1,42 +1,42 @@
 {{template "admin_base" .}}
 
-{{define "title"}}Profil - Charon Administrace{{end}}
+{{define "title"}}Profil - Charon Administrácia{{end}}
 
 {{define "content"}}
-<h1 class="admin-title">Můj profil</h1>
+<h1 class="admin-title">Môj profil</h1>
 
 {{if .Error}}
 <div class="alert alert-error">{{.Error}}</div>
 {{end}}
 
 {{if .Saved}}
-<div class="alert alert-success">Profil byl úspěšně aktualizován.</div>
+<div class="alert alert-success">Profil bol úspešne aktualizovaný.</div>
 {{end}}
 
 <div class="admin-card">
     <form method="POST" action="/admin/profile">
         <div class="form-group">
-            <label>Přezdívka</label>
+            <label>Prezývka</label>
             <input type="text" value="{{.User.Nickname}}" disabled style="opacity: 0.6;">
         </div>
 
         <div class="form-group">
-            <label for="name">Jméno</label>
+            <label for="name">Meno</label>
             <input type="text" id="name" name="name" value="{{.User.Name}}">
         </div>
 
         <div class="form-group">
-            <label for="surname">Příjmení</label>
+            <label for="surname">Priezvisko</label>
             <input type="text" id="surname" name="surname" value="{{.User.Surname}}">
         </div>
 
         <div class="form-group">
-            <label for="password">Nové heslo (ponechte prázdné pro zachování stávajícího)</label>
+            <label for="password">Nové heslo (ponechajte prázdne pre zachovanie aktuálneho)</label>
             <input type="password" id="password" name="password">
         </div>
 
-        <button type="submit" class="btn">Uložit profil</button>
-        <a href="/admin" style="margin-left: 1rem; color: var(--text-muted);">Zrušit</a>
+        <button type="submit" class="btn">Uložiť profil</button>
+        <a href="/admin" style="margin-left: 1rem; color: var(--text-muted);">Zrušiť</a>
     </form>
 </div>
 {{end}}

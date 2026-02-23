@@ -1,9 +1,9 @@
 {{template "admin_base" .}}
 
-{{define "title"}}{{if .IsNew}}Nový uživatel{{else}}Upravit uživatele{{end}} - Charon Administrace{{end}}
+{{define "title"}}{{if .IsNew}}Nový používateľ{{else}}Upraviť používateľa{{end}} - Charon Administrácia{{end}}
 
 {{define "content"}}
-<h1 class="admin-title">{{if .IsNew}}Nový uživatel{{else}}Upravit uživatele{{end}}</h1>
+<h1 class="admin-title">{{if .IsNew}}Nový používateľ{{else}}Upraviť používateľa{{end}}</h1>
 
 {{if .Error}}
 <div class="alert alert-error">{{.Error}}</div>
@@ -12,22 +12,22 @@
 <div class="admin-card">
     <form method="POST" action="{{if .IsNew}}/admin/users{{else}}/admin/users/{{.User.ID}}{{end}}">
         <div class="form-group">
-            <label for="nickname">Přezdívka (přihlašovací jméno)</label>
+            <label for="nickname">Prezývka (prihlasovacie meno)</label>
             <input type="text" id="nickname" name="nickname" value="{{.User.Nickname}}" required>
         </div>
 
         <div class="form-group">
-            <label for="name">Jméno</label>
+            <label for="name">Meno</label>
             <input type="text" id="name" name="name" value="{{.User.Name}}">
         </div>
 
         <div class="form-group">
-            <label for="surname">Příjmení</label>
+            <label for="surname">Priezvisko</label>
             <input type="text" id="surname" name="surname" value="{{.User.Surname}}">
         </div>
 
         <div class="form-group">
-            <label for="password">Heslo{{if not .IsNew}} (ponechte prázdné pro zachování stávajícího){{end}}</label>
+            <label for="password">Heslo{{if not .IsNew}} (ponechajte prázdne pre zachovanie aktuálneho){{end}}</label>
             <input type="password" id="password" name="password" {{if .IsNew}}required{{end}}>
         </div>
 
@@ -38,8 +38,8 @@
             </label>
         </div>
 
-        <button type="submit" class="btn">{{if .IsNew}}Vytvořit uživatele{{else}}Uložit uživatele{{end}}</button>
-        <a href="/admin/users" style="margin-left: 1rem; color: var(--text-muted);">Zrušit</a>
+        <button type="submit" class="btn">{{if .IsNew}}Vytvoriť používateľa{{else}}Uložiť používateľa{{end}}</button>
+        <a href="/admin/users" style="margin-left: 1rem; color: var(--text-muted);">Zrušiť</a>
     </form>
 </div>
 {{end}}

@@ -1,9 +1,9 @@
 {{define "login.html"}}<!DOCTYPE html>
-<html lang="cs">
+<html lang="sk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Přihlášení - Charon Administrace</title>
+    <title>Prihlásenie - Charon Administrácia</title>
     <style>
         :root {
             --black: #0a0a0a;
@@ -30,20 +30,20 @@
 </head>
 <body>
     <div class="login-card">
-        <div class="login-brand">Charon Administrace</div>
+        <div class="login-brand">Charon Administrácia</div>
         {{if .Error}}
         <div class="alert-error">{{.Error}}</div>
         {{end}}
         <form method="POST" action="/admin/login">
             <div class="form-group">
-                <label for="username">Uživatelské jméno</label>
+                <label for="username">Používateľské meno</label>
                 <input type="text" id="username" name="username" required autofocus>
             </div>
             <div class="form-group">
                 <label for="password">Heslo</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn">Přihlásit se</button>
+            <button type="submit" class="btn">Prihlásiť sa</button>
         </form>
     </div>
 </body>
