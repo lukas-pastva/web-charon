@@ -71,6 +71,12 @@ func (s *UserStore) Delete(id int64) error {
 	return err
 }
 
+func (s *UserStore) GetFirstAdminID() (int64, error) {
+	var id int64
+	err := s.DB.QueryRow("SELECT id FROM users WHERE is_admin = TRUE ORDER BY id ASC LIMIT 1").Scan(&id)
+	return id, err
+}
+
 func (s *UserStore) Count() (int, error) {
 	var count int
 	err := s.DB.QueryRow("SELECT COUNT(*) FROM users").Scan(&count)

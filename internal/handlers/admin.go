@@ -319,7 +319,10 @@ func (h *AdminHandler) Users_List(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Interní chyba serveru", 500)
 		return
 	}
-	h.render(w, "users.html", map[string]interface{}{"Users": users, "CurrentUser": CurrentUser(r)})
+	currentUser := CurrentUser(r)
+	firstAdminID, _ := h.Users.GetFirstAdminID()
+	isInitialAdmin := currentUser != nil && currentUser.ID == firstAdminID
+	h.render(w, "users.html", map[string]interface{}{"Users": users, "CurrentUser": currentUser, "IsInitialAdmin": isInitialAdmin})
 }
 
 func (h *AdminHandler) Users_New(w http.ResponseWriter, r *http.Request) {
@@ -371,7 +374,15 @@ func (h *AdminHandler) Users_Edit(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	h.render(w, "user_form.html", map[string]interface{}{"User": user, "IsNew": false, "CurrentUser": CurrentUser(r)})
+	currentUser := CurrentUser(r)
+	if user.IsAdmin {
+		firstAdminID, _ := h.Users.GetFirstAdminID()
+		if currentUser == nil || currentUser.ID != firstAdminID {
+			http.Error(w, "Iba pôvodný administrátor môže upravovať účty iných administrátorov.", http.StatusForbidden)
+			return
+		}
+	}
+	h.render(w, "user_form.html", map[string]interface{}{"User": user, "IsNew": false, "CurrentUser": currentUser})
 }
 
 func (h *AdminHandler) Users_Update(w http.ResponseWriter, r *http.Request) {
@@ -380,6 +391,15 @@ func (h *AdminHandler) Users_Update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.NotFound(w, r)
 		return
+	}
+
+	currentUser := CurrentUser(r)
+	if user.IsAdmin {
+		firstAdminID, _ := h.Users.GetFirstAdminID()
+		if currentUser == nil || currentUser.ID != firstAdminID {
+			http.Error(w, "Iba pôvodný administrátor môže upravovať účty iných administrátorov.", http.StatusForbidden)
+			return
+		}
 	}
 
 	r.ParseForm()
@@ -413,6 +433,18 @@ func (h *AdminHandler) Users_Delete(w http.ResponseWriter, r *http.Request) {
 	if currentUser != nil && currentUser.ID == id {
 		http.Error(w, "Nemůžete smazat sami sebe", http.StatusBadRequest)
 		return
+	}
+	target, err := h.Users.GetByID(id)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+	if target.IsAdmin {
+		firstAdminID, _ := h.Users.GetFirstAdminID()
+		if currentUser == nil || currentUser.ID != firstAdminID {
+			http.Error(w, "Iba pôvodný administrátor môže mazať účty iných administrátorov.", http.StatusForbidden)
+			return
+		}
 	}
 	h.Users.Delete(id)
 	http.Redirect(w, r, "/admin/users", http.StatusSeeOther)

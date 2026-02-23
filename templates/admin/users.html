@@ -35,10 +35,12 @@
                 </td>
                 <td style="color: var(--text-muted);">{{.CreatedAt.Format "2006-01-02"}}</td>
                 <td style="white-space: nowrap;">
+                    {{if or (not .IsAdmin) $.IsInitialAdmin}}
                     <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm" style="margin-right: 0.25rem;">Upraviť</a>
                     <form method="POST" action="/admin/users/{{.ID}}/delete" style="display:inline;">
                         <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tohto používateľa? Používateľ sa už nebude môcť prihlásiť.">Zmazať</button>
                     </form>
+                    {{end}}
                 </td>
             </tr>
             {{end}}
@@ -62,12 +64,14 @@
                 <span class="mobile-card-label">Vytvorené:</span>
                 <span>{{.CreatedAt.Format "2006-01-02"}}</span>
             </div>
+            {{if or (not .IsAdmin) $.IsInitialAdmin}}
             <div class="mobile-card-actions">
                 <a href="/admin/users/{{.ID}}/edit" class="btn btn-sm">Upraviť</a>
                 <form method="POST" action="/admin/users/{{.ID}}/delete" style="display:inline;">
                     <button type="submit" class="btn btn-sm btn-danger" data-confirm="Naozaj chcete zmazať tohto používateľa? Používateľ sa už nebude môcť prihlásiť.">Zmazať</button>
                 </form>
             </div>
+            {{end}}
         </div>
         {{end}}
     </div>
