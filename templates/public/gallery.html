@@ -1,6 +1,9 @@
 {{template "base" .}}
 
 {{define "title"}}Galéria - Motoklub Charon{{end}}
+{{define "meta_description"}}Fotogaléria Motoklub Charon. Fotky z jázd, stretnutí a akcií motorkárov.{{end}}
+{{define "og_title"}}Galéria - Motoklub Charon{{end}}
+{{define "og_description"}}Fotogaléria Motoklub Charon. Fotky z jázd, stretnutí a akcií motorkárov.{{end}}
 
 {{define "content"}}
 <div class="container">
@@ -11,7 +14,7 @@
         {{range .Galleries}}
         <a href="/gallery/{{.Slug}}" class="gallery-card">
             {{if .Images}}
-            <img src="/uploads/{{(index .Images 0).Filename}}" alt="{{.Title}}" class="gallery-card-img">
+            <img src="/uploads/{{(index .Images 0).Filename}}" alt="{{.Title}}" class="gallery-card-img" loading="lazy">
             {{end}}
             <div class="gallery-card-body">
                 <h3 class="gallery-card-title">{{.Title}}</h3>

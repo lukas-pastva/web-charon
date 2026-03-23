@@ -1,6 +1,10 @@
 {{template "base" .}}
 
 {{define "title"}}{{.Gallery.Title}} - Motoklub Charon{{end}}
+{{define "meta_description"}}{{if .Gallery.Description}}{{.Gallery.Description}}{{else}}{{.Gallery.Title}} - fotogaléria z Motoklub Charon{{end}}{{end}}
+{{define "og_title"}}{{.Gallery.Title}} - Motoklub Charon{{end}}
+{{define "og_description"}}{{if .Gallery.Description}}{{.Gallery.Description}}{{else}}{{.Gallery.Title}} - fotogaléria z Motoklub Charon{{end}}{{end}}
+{{define "og_image"}}{{if .Gallery.Images}}<meta property="og:image" content="{{.BaseURL}}/uploads/{{(index .Gallery.Images 0).Filename}}">{{end}}{{end}}
 
 {{define "content"}}
 <div class="container">
@@ -10,7 +14,7 @@
     {{if .Gallery.Images}}
     <div class="gallery-images">
         {{range .Gallery.Images}}
-        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">
+        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}" loading="lazy">
         {{end}}
     </div>
     {{else}}

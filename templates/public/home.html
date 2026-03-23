@@ -1,6 +1,9 @@
 {{template "base" .}}
 
 {{define "title"}}Motoklub Charon - Domov{{end}}
+{{define "meta_description"}}Motoklub Charon - Zrodení k jazde. Vykovaní z ocele. Najnovšie články, galérie a novinky z motorkárskeho sveta.{{end}}
+{{define "og_title"}}Motoklub Charon - Domov{{end}}
+{{define "og_description"}}Zrodení k jazde. Vykovaní z ocele. Vitajte v bratstve motorkárov.{{end}}
 
 {{define "content"}}
 <div class="hero">
@@ -15,7 +18,7 @@
         {{range .Articles}}
         <a href="/articles/{{.Slug}}" class="article-card">
             {{if .CoverImage}}
-            <img src="/uploads/{{.CoverImage}}" alt="{{.Title}}" class="article-card-img">
+            <img src="/uploads/{{.CoverImage}}" alt="{{.Title}}" class="article-card-img" loading="lazy">
             {{end}}
             <div class="article-card-body">
                 <h3 class="article-card-title">{{.Title}}</h3>
@@ -31,7 +34,7 @@
     <h2 class="section-title" style="margin-top: 3rem;">Vybraná galéria</h2>
     <div class="gallery-images">
         {{range .FeaturedGallery.Images}}
-        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">
+        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}" loading="lazy">
         {{end}}
     </div>
     {{end}}

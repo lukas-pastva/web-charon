@@ -1,12 +1,38 @@
 {{template "base" .}}
 
 {{define "title"}}{{.Article.Title}} - Motoklub Charon{{end}}
+{{define "meta_description"}}{{if .Article.Excerpt}}{{.Article.Excerpt}}{{else}}{{.Article.Title}} - článok z Motoklub Charon{{end}}{{end}}
+{{define "og_type"}}article{{end}}
+{{define "og_title"}}{{.Article.Title}}{{end}}
+{{define "og_description"}}{{if .Article.Excerpt}}{{.Article.Excerpt}}{{else}}{{.Article.Title}} - článok z Motoklub Charon{{end}}{{end}}
+{{define "og_image"}}{{if .Article.CoverImage}}<meta property="og:image" content="{{.BaseURL}}/uploads/{{.Article.CoverImage}}">{{end}}{{end}}
+{{define "structured_data"}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{.Article.Title}}",
+    {{if .Article.Excerpt}}"description": "{{.Article.Excerpt}}",{{end}}
+    {{if .Article.CoverImage}}"image": "{{.BaseURL}}/uploads/{{.Article.CoverImage}}",{{end}}
+    "datePublished": "{{.Article.CreatedAt.Format "2006-01-02T15:04:05Z07:00"}}",
+    "dateModified": "{{.Article.UpdatedAt.Format "2006-01-02T15:04:05Z07:00"}}",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Motoklub Charon"
+    },
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{.BaseURL}}/articles/{{.Article.Slug}}"
+    }
+}
+</script>
+{{end}}
 
 {{define "content"}}
 <div class="container">
     <div class="article-content">
         {{if .Article.CoverImage}}
-        <img src="/uploads/{{.Article.CoverImage}}" alt="{{.Article.Title}}" class="article-cover">
+        <img src="/uploads/{{.Article.CoverImage}}" alt="{{.Article.Title}}" class="article-cover" loading="lazy">
         {{end}}
         <h1>{{.Article.Title}}</h1>
         <div class="meta">{{.Article.CreatedAt.Format "2. 1. 2006 o 15:04"}}</div>
@@ -17,7 +43,7 @@
     <h2 class="section-title">Galéria</h2>
     <div class="gallery-images">
         {{range .Gallery.Images}}
-        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}">
+        <img src="/uploads/{{.Filename}}" alt="{{.Caption}}" data-caption="{{.Caption}}" loading="lazy">
         {{end}}
     </div>
     {{end}}

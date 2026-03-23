@@ -20,6 +20,8 @@ func New(pub *handlers.PublicHandler, admin *handlers.AdminHandler, auth *handle
 	r.Post("/articles/{slug}/comments", pub.Comment_Submit)
 	r.Get("/gallery", pub.Gallery_List)
 	r.Get("/gallery/{slug}", pub.Gallery_Show)
+	r.Get("/robots.txt", pub.Robots)
+	r.Get("/sitemap.xml", pub.Sitemap)
 
 	// Static files
 	r.Handle("/static/*", http.StripPrefix("/static/", http.FileServer(staticFS)))

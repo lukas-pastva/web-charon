@@ -4,8 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{block "title" .}}Motoklub Charon{{end}}</title>
+    <meta name="description" content="{{block "meta_description" .}}Motoklub Charon - Zrodení k jazde. Vykovaní z ocele. Vitajte v bratstve motorkárov.{{end}}">
+    {{if .CanonicalPath}}<link rel="canonical" href="{{.BaseURL}}{{.CanonicalPath}}">{{end}}
+    <!-- Open Graph -->
+    <meta property="og:type" content="{{block "og_type" .}}website{{end}}">
+    <meta property="og:title" content="{{block "og_title" .}}Motoklub Charon{{end}}">
+    <meta property="og:description" content="{{block "og_description" .}}Motoklub Charon - Zrodení k jazde. Vykovaní z ocele. Vitajte v bratstve motorkárov.{{end}}">
+    {{if .CanonicalPath}}<meta property="og:url" content="{{.BaseURL}}{{.CanonicalPath}}">{{end}}
+    <meta property="og:site_name" content="Motoklub Charon">
+    <meta property="og:locale" content="sk_SK">
+    {{block "og_image" .}}{{end}}
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="/static/css/style.css">
+    {{block "structured_data" .}}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Motoklub Charon",
+        "description": "Motoklub Charon - Zrodení k jazde. Vykovaní z ocele."{{if .BaseURL}},
+        "url": "{{.BaseURL}}"{{end}}
+    }
+    </script>
+    {{end}}
 </head>
 <body>
     <nav class="nav">

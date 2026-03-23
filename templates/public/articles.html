@@ -1,6 +1,9 @@
 {{template "base" .}}
 
 {{define "title"}}Články - Motoklub Charon{{end}}
+{{define "meta_description"}}Články a novinky z Motoklub Charon. Čítajte o udalostiach, jazdách a živote motorkárov.{{end}}
+{{define "og_title"}}Články - Motoklub Charon{{end}}
+{{define "og_description"}}Články a novinky z Motoklub Charon. Čítajte o udalostiach, jazdách a živote motorkárov.{{end}}
 
 {{define "content"}}
 <div class="container">
@@ -11,7 +14,7 @@
         {{range .Articles}}
         <a href="/articles/{{.Slug}}" class="article-card">
             {{if .CoverImage}}
-            <img src="/uploads/{{.CoverImage}}" alt="{{.Title}}" class="article-card-img">
+            <img src="/uploads/{{.CoverImage}}" alt="{{.Title}}" class="article-card-img" loading="lazy">
             {{end}}
             <div class="article-card-body">
                 <h3 class="article-card-title">{{.Title}}</h3>

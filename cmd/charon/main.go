@@ -150,11 +150,13 @@ func main() {
 	}
 
 	// Initialize handlers
+	baseURL := "https://" + cfg.PublicDomain
 	publicHandler := &handlers.PublicHandler{
 		Articles:  articleStore,
 		Galleries: galleryStore,
 		Comments:  commentStore,
 		Templates: publicTmpl,
+		BaseURL:   baseURL,
 	}
 
 	adminHandler := &handlers.AdminHandler{
