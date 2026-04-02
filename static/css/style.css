@@ -177,7 +177,7 @@ a:hover {
     transform: translate(-50%, -50%);
     width: 400px;
     height: 400px;
-    background: url('/static/images/logo.jpg') center/contain no-repeat;
+    background: url('/static/images/logo-hero.jpg') center/contain no-repeat;
     opacity: 0.06;
     pointer-events: none;
 }
