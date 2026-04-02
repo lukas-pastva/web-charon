@@ -15,7 +15,7 @@
     <meta property="og:locale" content="sk_SK">
     {{block "og_image" .}}{{end}}
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v={{.Version}}">
     {{block "structured_data" .}}
     <script type="application/ld+json">
     {
@@ -47,6 +47,6 @@
         <p>&copy; Motoklub Charon. Jazda na slobode.</p>
     </footer>
 
-    <script src="/static/js/app.js"></script>
+    <script src="/static/js/app.js?v={{.Version}}"></script>
 </body>
 </html>{{end}}

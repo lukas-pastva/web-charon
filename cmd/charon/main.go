@@ -2,6 +2,8 @@ package main
 
 import (
 	"crypto/rand"
+	"crypto/sha256"
+	"fmt"
 	"html/template"
 	"io/fs"
 	"log"
@@ -149,6 +151,14 @@ func main() {
 		log.Println("created initial admin user (nickname: admin)")
 	}
 
+	// Compute cache-bust version from embedded static files
+	cssData, _ := fs.ReadFile(charon.StaticFS, "static/css/style.css")
+	jsData, _ := fs.ReadFile(charon.StaticFS, "static/js/app.js")
+	h := sha256.New()
+	h.Write(cssData)
+	h.Write(jsData)
+	version := fmt.Sprintf("%x", h.Sum(nil))[:8]
+
 	// Initialize handlers
 	baseURL := "https://" + cfg.PublicDomain
 	publicHandler := &handlers.PublicHandler{
@@ -157,6 +167,7 @@ func main() {
 		Comments:  commentStore,
 		Templates: publicTmpl,
 		BaseURL:   baseURL,
+		Version:   version,
 	}
 
 	adminHandler := &handlers.AdminHandler{

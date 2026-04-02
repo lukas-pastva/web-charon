@@ -21,6 +21,7 @@ type PublicHandler struct {
 	Comments  *models.CommentStore
 	Templates map[string]*template.Template
 	BaseURL   string
+	Version   string
 }
 
 func (h *PublicHandler) Home(w http.ResponseWriter, r *http.Request) {
@@ -255,6 +256,9 @@ func (h *PublicHandler) render(w http.ResponseWriter, name string, data interfac
 		log.Printf("public template not found: %s", name)
 		http.Error(w, "Interní chyba serveru", 500)
 		return
+	}
+	if m, ok := data.(map[string]interface{}); ok {
+		m["Version"] = h.Version
 	}
 	err := t.ExecuteTemplate(w, name, data)
 	if err != nil {
