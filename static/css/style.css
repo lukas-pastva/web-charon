@@ -145,7 +145,7 @@ img { display: block; max-width: 100%; }
     content: '';
     position: absolute;
     inset: 0;
-    background: url('/static/images/logo-hero.jpg') center / 420px no-repeat;
+    background: url('/static/images/logo-hero.jpg') center / 520px auto no-repeat;
     opacity: 0.22;
     pointer-events: none;
 }
@@ -678,7 +678,7 @@ img { display: block; max-width: 100%; }
         min-height: 360px;
         padding: 4rem 1.25rem;
     }
-    .hero::before { background-size: 280px; }
+    .hero::before { background-size: 340px auto; }
     .hero h1 { font-size: 2rem; letter-spacing: 4px; }
     .hero p { font-size: 0.85rem; }
 
