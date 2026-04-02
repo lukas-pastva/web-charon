@@ -7,7 +7,6 @@
 
 {{define "content"}}
 <div class="hero">
-    <img src="/static/images/logo-hero.jpg" alt="Motoklub Charon Logo" class="hero-logo">
     <h1>Motoklub Charon</h1>
     <p>Zrodení k jazde. Vykovaní z ocele. Vitajte v bratstve.</p>
 </div>
@@ -21,9 +20,7 @@
             {{if .CoverImage}}
             <img src="/uploads/{{.CoverImage}}" alt="{{.Title}}" class="article-card-img" loading="lazy">
             {{else}}
-            <div class="article-card-placeholder">
-                <img src="/static/images/logo-small.jpg" alt="Charon">
-            </div>
+            <div class="article-card-placeholder"></div>
             {{end}}
             <div class="article-card-body">
                 <h3 class="article-card-title">{{.Title}}</h3>
