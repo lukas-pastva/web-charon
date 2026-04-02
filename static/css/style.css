@@ -2,8 +2,8 @@
 
 /* === THEMES === */
 
-:root,
-[data-theme="gold"] {
+/* Colors from the Charon Koseca logo: gold, black, red */
+:root {
     --bg-body: #16130e;
     --bg-surface: #1e1a14;
     --bg-card: #262118;
@@ -12,37 +12,10 @@
     --accent: #d4a418;
     --accent-hover: #e8b82c;
     --accent-dark: #b8860b;
+    --red: #cc2222;
     --text: #bfb49e;
     --text-strong: #e8dcc6;
     --text-muted: #7d7264;
-}
-
-[data-theme="red"] {
-    --bg-body: #14100e;
-    --bg-surface: #1c1614;
-    --bg-card: #261c18;
-    --bg-input: #2e241f;
-    --border: #3a2a28;
-    --accent: #cc3333;
-    --accent-hover: #e04444;
-    --accent-dark: #a82828;
-    --text: #bfb0a0;
-    --text-strong: #e8dcd0;
-    --text-muted: #7d6e64;
-}
-
-[data-theme="steel"] {
-    --bg-body: #0e1118;
-    --bg-surface: #14181f;
-    --bg-card: #1a2028;
-    --bg-input: #20282f;
-    --border: #283038;
-    --accent: #5a8ab5;
-    --accent-hover: #6e9ec8;
-    --accent-dark: #4a7094;
-    --text: #9eaab8;
-    --text-strong: #c8d4e2;
-    --text-muted: #5e6a78;
 }
 
 /* === RESET === */
@@ -92,7 +65,6 @@ img { display: block; }
 }
 .nav-brand:hover { color: var(--accent-hover); }
 
-.nav-right { display: flex; align-items: center; gap: 0.75rem; }
 .nav-links { display: flex; gap: 1.75rem; list-style: none; }
 
 .nav-links a {
@@ -113,21 +85,6 @@ img { display: block; }
     font-size: 1.5rem;
     cursor: pointer;
 }
-
-.theme-toggle {
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border-color 0.2s, color 0.2s;
-}
-.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
 /* === HERO === */
 
@@ -446,8 +403,8 @@ img { display: block; }
 }
 .btn:hover { background: var(--accent-dark); color: #fff; }
 .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.78rem; }
-.btn-danger { background: #b52a2a; }
-.btn-danger:hover { background: #962222; }
+.btn-danger { background: var(--red); }
+.btn-danger:hover { background: #a81c1c; }
 .btn-success { background: #22925a; }
 .btn-success:hover { background: #1a7a4a; }
 

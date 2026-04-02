@@ -10,33 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Theme switcher
-    initThemeSwitcher();
-
     // Gallery lightbox
     initLightbox();
 });
-
-// Theme switcher with localStorage persistence
-function initThemeSwitcher() {
-    var themes = ['gold', 'red', 'steel'];
-    var btn = document.getElementById('themeToggle');
-    if (!btn) return;
-
-    // Load saved theme
-    var saved = localStorage.getItem('charon-theme');
-    if (saved && themes.indexOf(saved) !== -1) {
-        document.documentElement.setAttribute('data-theme', saved);
-    }
-
-    btn.addEventListener('click', function () {
-        var current = document.documentElement.getAttribute('data-theme') || 'gold';
-        var idx = themes.indexOf(current);
-        var next = themes[(idx + 1) % themes.length];
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('charon-theme', next);
-    });
-}
 
 function initLightbox() {
     const images = document.querySelectorAll('.gallery-images img');
