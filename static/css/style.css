@@ -86,7 +86,7 @@ img { display: block; max-width: 100%; }
     transform: translateY(-50%);
     width: 28px;
     height: 28px;
-    background: url('/static/images/logo-small.png') center / contain no-repeat;
+    background: url('/static/images/logo-small-c71638ea.png') center / contain no-repeat;
     border-radius: 50%;
 }
 
@@ -145,7 +145,7 @@ img { display: block; max-width: 100%; }
     content: '';
     position: absolute;
     inset: 0;
-    background: url('/static/images/logo-hero.jpg') center / 520px auto no-repeat;
+    background: url('/static/images/logo-hero-c71638ea.jpg') center / 520px auto no-repeat;
     opacity: 0.22;
     pointer-events: none;
 }
@@ -226,7 +226,7 @@ img { display: block; max-width: 100%; }
     content: '';
     width: 22px;
     height: 22px;
-    background: url('/static/images/logo-small.png') center / contain no-repeat;
+    background: url('/static/images/logo-small-c71638ea.png') center / contain no-repeat;
     flex-shrink: 0;
 }
 
@@ -285,7 +285,7 @@ img { display: block; max-width: 100%; }
     content: '';
     width: 64px;
     height: 64px;
-    background: url('/static/images/logo-small.png') center / contain no-repeat;
+    background: url('/static/images/logo-small-c71638ea.png') center / contain no-repeat;
     opacity: 0.15;
 }
 
@@ -629,7 +629,7 @@ img { display: block; max-width: 100%; }
     content: '';
     position: absolute;
     inset: 0;
-    background: url('/static/images/logo-small.png') center / 100px no-repeat;
+    background: url('/static/images/logo-small-c71638ea.png') center / 100px no-repeat;
     opacity: 0.05;
     pointer-events: none;
 }
