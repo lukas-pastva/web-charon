@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Theme switcher with localStorage persistence
 function initThemeSwitcher() {
-    var themes = ['flame', 'red', 'steel'];
+    var themes = ['gold', 'red', 'steel'];
     var btn = document.getElementById('themeToggle');
     if (!btn) return;
 
@@ -30,7 +30,7 @@ function initThemeSwitcher() {
     }
 
     btn.addEventListener('click', function () {
-        var current = document.documentElement.getAttribute('data-theme') || 'flame';
+        var current = document.documentElement.getAttribute('data-theme') || 'gold';
         var idx = themes.indexOf(current);
         var next = themes[(idx + 1) % themes.length];
         document.documentElement.setAttribute('data-theme', next);
