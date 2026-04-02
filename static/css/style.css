@@ -150,6 +150,9 @@ img { display: block; }
 /* === SECTION TITLES === */
 
 .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--accent);
@@ -158,6 +161,15 @@ img { display: block; }
     margin-bottom: 1.5rem;
     padding-bottom: 0.6rem;
     border-bottom: 1px solid var(--border);
+}
+
+.section-title::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background: url('/static/images/logo-small.png') center / contain no-repeat;
+    flex-shrink: 0;
 }
 
 /* === ARTICLE CARDS === */
@@ -191,7 +203,7 @@ img { display: block; }
     width: 100%;
     height: 190px;
     background:
-        url('/static/images/logo-small.jpg') center / 70px no-repeat,
+        url('/static/images/logo-small.png') center / 70px no-repeat,
         linear-gradient(135deg, var(--bg-input) 0%, var(--bg-card) 100%);
 }
 
@@ -447,7 +459,7 @@ img { display: block; }
     content: '';
     position: absolute;
     inset: 0;
-    background: url('/static/images/logo-small.jpg') center / 120px no-repeat;
+    background: url('/static/images/logo-small.png') center / 120px no-repeat;
     opacity: 0.12;
     pointer-events: none;
 }
