@@ -145,8 +145,8 @@ img { display: block; max-width: 100%; }
     content: '';
     position: absolute;
     inset: 0;
-    background: url('/static/images/logo-hero-c71638ea.jpg') center / 520px auto no-repeat;
-    opacity: 0.38;
+    background: url('/static/images/logo-hero-c71638ea.jpg') center / 700px auto no-repeat;
+    opacity: 0.55;
     pointer-events: none;
 }
 
@@ -170,7 +170,7 @@ img { display: block; max-width: 100%; }
     font-family: var(--font-display);
     font-size: 3.2rem;
     font-weight: 700;
-    color: var(--text-dim);
+    color: var(--text);
     text-transform: uppercase;
     letter-spacing: 8px;
     line-height: 1.1;
